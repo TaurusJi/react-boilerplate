@@ -1,5 +1,14 @@
 import React from "react";
 import styles from "./App.module.scss";
+// import _ from "lodash";
+
+// const a = {
+//   b: {
+//     c: "1"
+//   }
+// };
+// console.log(_.get(a, "b.c", ""), "");
+// console.log(...a);
 
 const App: React.FC = () => {
   return (
