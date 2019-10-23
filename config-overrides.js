@@ -1,6 +1,8 @@
 // config-overrides
 const {
   override,
+  addLessLoader,
+  fixBabelImports,
   addBabelPlugins,
   addWebpackPlugin,
   addDecoratorsLegacy
@@ -21,7 +23,16 @@ if (IS_PROD) {
 
 module.exports = override(
   addDecoratorsLegacy(),
-  ...addBabelPlugins(babelPlugins),
+  fixBabelImports("import", {
+    libraryName: "antd",
+    libraryDirectory: "es",
+    style: true
+  }),
+  addLessLoader({
+    javascriptEnabled: true,
+    modifyVars: { "@primary-color": "#1DA57A" }
+  }),
+  ...addBabelPlugins(...babelPlugins),
   ...webpackPlugins.map(plugin => addWebpackPlugin(plugin))
   // config => {
   //   config.plugins.push(...webpackPlugins);
