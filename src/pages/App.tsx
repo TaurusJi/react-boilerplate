@@ -3,7 +3,7 @@ import styles from "./App.module.scss";
 
 const App: React.FC = () => {
   return (
-    <div className={styles.app}>
+    <div className={styles.App}>
       <header className={styles.AppHeader}>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.

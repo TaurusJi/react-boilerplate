@@ -11,7 +11,7 @@ import "core-js/features/array/includes";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import store from "src/models";
+import store from "src/store";
 import "./index.css";
 import App from "./pages/App";
 
