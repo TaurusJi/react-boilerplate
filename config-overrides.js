@@ -3,11 +3,13 @@ const {
   override,
   addLessLoader,
   fixBabelImports,
+  addWebpackAlias,
   addBabelPlugins,
   addWebpackPlugin,
   addDecoratorsLegacy
 } = require("customize-cra");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const rewireReactHotLoader = require("react-app-rewire-hot-loader");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const babelPlugins = ["lodash"];
@@ -32,6 +34,9 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: { "@primary-color": "#1DA57A" }
   }),
+  addWebpackAlias({
+    "react-dom$": "@hot-loader/react-dom"
+  }),
   ...addBabelPlugins(...babelPlugins),
   ...webpackPlugins.map(plugin => addWebpackPlugin(plugin)),
   config => {
@@ -41,6 +46,7 @@ module.exports = override(
         patterns: ["./src/styles/variable.scss", "./src/styles/mixin.scss"]
       }
     });
+    config = rewireReactHotLoader(config, process.env.NODE_ENV);
     return config;
   }
 );

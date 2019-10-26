@@ -1,4 +1,5 @@
 import React from "react";
+import { hot } from "react-hot-loader/root";
 import styles from "./App.module.scss";
 
 const App: React.FC = () => {
@@ -21,4 +22,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default hot(App);
