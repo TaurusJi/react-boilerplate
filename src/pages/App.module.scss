@@ -1,19 +1,4 @@
-.App {
-  color: $text;
-  text-align: center;
-}
-
-.AppHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  color: white;
-  font-size: calc(10px + 2vmin);
-  background-color: #282c34;
-}
-
-.AppLink {
-  color: #09d3ac;
+.main {
+  height: 100%;
+  background: #eee;
 }
