@@ -36,7 +36,10 @@
     "styled-components": "^4.4.0",
     "styled-normalize": "^8.0.6",
     "styled-reset": "^4.0.2",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "use-immer": "^0.3.4",
+    "use-methods": "^0.5.1",
+    "use-react-router": "^1.0.7"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.6.0",

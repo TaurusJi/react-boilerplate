@@ -1,12 +1,22 @@
 import HomePage from "src/pages/HomePage";
 import Login from "src/pages/Login";
 import User from "src/pages/User";
+import {
+  NormalRoute,
+  AuthorizedRoute
+} from "src/components/AclRouter/AclRouter";
+import NotFound from "src/components/NotFound";
 
-export default [
-  { path: "/", component: HomePage, exact: true, requiresAuth: false },
-  { path: "/login", component: Login, requiresAuth: false },
-  { path: "/user", component: User, requiresAuth: true },
+export const normalRoutes: NormalRoute[] = [
+  { path: "/", component: HomePage, exact: true },
+  { path: "/login", component: Login }
+];
+
+export const authorizedRoutes: AuthorizedRoute[] = [
   {
-    redirect: "/"
+    path: "/user",
+    component: User,
+    permissions: ["admin"],
+    unauthorized: NotFound
   }
 ];

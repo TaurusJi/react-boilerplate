@@ -1,17 +1,26 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
 import styles from "./App.module.scss";
-import renderRoutes from "../router";
-import routesConfig from "src/router/routes.config";
-import { Switch, BrowserRouter as Router } from "react-router-dom";
+import { authorizedRoutes, normalRoutes } from "src/router/routes.config";
+import { BrowserRouter as Router } from "react-router-dom";
+import AclRouter from "src/components/AclRouter/AclRouter";
+import NormalLayout from "src/components/NormalLayout";
+import AuthorizedLayout from "src/components/AuthorizedLayout";
+import NotFound from "src/components/NotFound";
 
-const authed = false;
-const authPath = "/login";
+const authorities = ["admin"];
 const App: React.FC = () => {
   return (
     <main className={styles.main}>
       <Router>
-        <Switch>{renderRoutes(routesConfig, authed, authPath)}</Switch>
+        <AclRouter
+          authorities={authorities}
+          authorizedRoutes={authorizedRoutes}
+          authorizedLayout={AuthorizedLayout}
+          normalRoutes={normalRoutes}
+          normalLayout={NormalLayout}
+          notFound={NotFound}
+        />
       </Router>
     </main>
   );

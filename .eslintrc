@@ -1,11 +1,21 @@
 {
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "extends": [
     "react-app",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "plugins": ["@typescript-eslint", "react"],
-  "rules": {}
+  "settings": {
+    // support import modules from TypeScript files in JavaScript files
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "polyfills": ["fetch", "Promise", "URL", "object-assign"]
+  }
 }
