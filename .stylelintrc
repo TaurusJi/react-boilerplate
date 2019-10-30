@@ -11,6 +11,8 @@
   "rules": {
     "indentation": 2,
     "no-descending-specificity": null,
+    "declaration-block-trailing-semicolon": null,
+    "declaration-empty-line-before": null,
     "plugin/declaration-block-no-ignored-properties": true
   }
 }

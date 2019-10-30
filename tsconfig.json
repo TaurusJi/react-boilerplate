@@ -31,5 +31,6 @@
     "src/setupTests.ts",
     "tslint:latest",
     "tslint-config-prettier"
-  ]
+  ],
+  "include": ["src"]
 }

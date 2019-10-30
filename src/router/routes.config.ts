@@ -20,14 +20,14 @@ export const authorizedRoutes: AuthorizedRoute[] = [
   {
     path: "/",
     exact: true,
-    redirect: "/login",
+    redirect: "/dashboard",
     component: HomePage,
     permissions: ["admin"],
     breadcrumb: [],
     unauthorized: NotAuthorize
   },
   {
-    path: "/user",
+    path: "/dashboard/user",
     component: User,
     permissions: ["admin"],
     breadcrumb: [],
