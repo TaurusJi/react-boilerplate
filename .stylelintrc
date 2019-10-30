@@ -1,14 +1,15 @@
 {
   "extends": [
+    "stylelint-config-recommended",
     "stylelint-config-standard",
-    "stylelint-config-rational-order",
-    "stylelint-config-prettier"
+    "stylelint-config-rational-order"
   ],
   "plugins": [
     "stylelint-order",
     "stylelint-declaration-block-no-ignored-properties"
   ],
   "rules": {
+    "indentation": 2,
     "no-descending-specificity": null,
     "plugin/declaration-block-no-ignored-properties": true
   }

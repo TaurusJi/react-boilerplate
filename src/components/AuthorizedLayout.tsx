@@ -1,81 +1,59 @@
 import React, { Component } from "react";
-import { Menu, Icon, Button } from "antd";
+import { Layout, Menu, Icon } from "antd";
 
-const { SubMenu } = Menu;
+const { Header, Footer, Sider, Content } = Layout;
 
-export default class AuthorizedLayout extends Component {
-  state = {
-    collapsed: false
-  };
+// 引入子菜单组件
+const SubMenu = Menu.SubMenu;
 
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  };
-
+export default class BasicLayout extends Component {
   render() {
     return (
-      <div style={{ width: 256 }}>
-        <Button
-          type="primary"
-          onClick={this.toggleCollapsed}
-          style={{ marginBottom: 16 }}
-        >
-          <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
-        </Button>
-        <Menu
-          defaultSelectedKeys={["1"]}
-          defaultOpenKeys={["sub1"]}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={this.state.collapsed}
-        >
-          <Menu.Item key="1">
-            <Icon type="pie-chart" />
-            <span>Option 1</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="desktop" />
-            <span>Option 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="inbox" />
-            <span>Option 3</span>
-          </Menu.Item>
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="mail" />
-                <span>Navigation One</span>
-              </span>
-            }
-          >
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="appstore" />
-                <span>Navigation Two</span>
-              </span>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
+      <Layout>
+        <Sider width={256} style={{ minHeight: "100vh" }}>
+          <div
+            style={{
+              height: "32px",
+              background: "rgba(255,255,255,.2)",
+              margin: "16px"
+            }}
+          />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+            <Menu.Item key="1">
+              <Icon type="pie-chart" />
+              <span>Helloworld</span>
+            </Menu.Item>
+            <SubMenu
+              key="sub1"
+              title={
+                <span>
+                  <Icon type="dashboard" />
+                  <span>Dashboard</span>
+                </span>
+              }
+            >
+              <Menu.Item key="2">分析页</Menu.Item>
+              <Menu.Item key="3">监控页</Menu.Item>
+              <Menu.Item key="4">工作台</Menu.Item>
             </SubMenu>
-          </SubMenu>
-        </Menu>
-        {this.props.children}
-      </div>
+          </Menu>
+        </Sider>
+        <Layout>
+          <Header
+            style={{ background: "#fff", textAlign: "center", padding: 0 }}
+          >
+            Header
+          </Header>
+          <Content style={{ margin: "24px 16px 0" }}>
+            <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
+              {this.props.children}
+            </div>
+          </Content>
+          <Footer style={{ textAlign: "center" }}>
+            Ant Design ©2019/10/29 Created by JCY
+          </Footer>
+        </Layout>
+      </Layout>
     );
   }
 }

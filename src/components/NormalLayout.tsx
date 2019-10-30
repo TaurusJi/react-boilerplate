@@ -1,5 +1,5 @@
 import React from "react";
 
-const NormalLayout: React.FC = () => <div>404</div>;
+const NormalLayout: React.FC = props => <div>{props.children}</div>;
 
 export default NormalLayout;

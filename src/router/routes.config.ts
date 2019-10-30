@@ -5,18 +5,32 @@ import {
   NormalRoute,
   AuthorizedRoute
 } from "src/components/AclRouter/AclRouter";
-import NotFound from "src/components/NotFound";
+import NotAuthorize from "src/components/NotAuthorize";
+
+// 登录前白名单
+export const whiteList: string[] = [];
+// 登录后黑名单
+export const blackList: string[] = [];
 
 export const normalRoutes: NormalRoute[] = [
-  { path: "/", component: HomePage, exact: true },
-  { path: "/login", component: Login }
+  { path: "/login", exact: true, component: Login }
 ];
 
 export const authorizedRoutes: AuthorizedRoute[] = [
   {
+    path: "/",
+    exact: true,
+    redirect: "/login",
+    component: HomePage,
+    permissions: ["admin"],
+    breadcrumb: [],
+    unauthorized: NotAuthorize
+  },
+  {
     path: "/user",
     component: User,
     permissions: ["admin"],
-    unauthorized: NotFound
+    breadcrumb: [],
+    unauthorized: NotAuthorize
   }
 ];
