@@ -1,25 +1,26 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
-import { authorizedRoutes, normalRoutes } from "src/router/routes.config";
-import { BrowserRouter as Router } from "react-router-dom";
+import { authorizedRoutes, normalRoutes } from "src/config/routes";
 import AclRouter from "src/components/AclRouter/AclRouter";
-import NormalLayout from "src/components/NormalLayout";
-import AuthorizedLayout from "src/components/AuthorizedLayout";
-import NotFound from "src/components/NotFound";
+import NormalLayout from "src/layouts/NormalLayout";
+import BasicLayout from "src/layouts/BasicLayout";
+import NotFound from "src/pages/NotFound";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "src/store";
 
 const authorities: string[] = ["admin"];
 const App: React.FC = () => {
   return (
-    <Router>
+    <ConnectedRouter history={history}>
       <AclRouter
         authorities={authorities}
         authorizedRoutes={authorizedRoutes}
-        authorizedLayout={AuthorizedLayout}
+        authorizedLayout={BasicLayout}
         normalRoutes={normalRoutes}
         normalLayout={NormalLayout}
         notFound={NotFound}
       />
-    </Router>
+    </ConnectedRouter>
   );
 };
 

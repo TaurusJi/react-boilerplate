@@ -5,7 +5,7 @@ import {
   NormalRoute,
   AuthorizedRoute
 } from "src/components/AclRouter/AclRouter";
-import NotAuthorize from "src/components/NotAuthorize";
+import Unauthorized from "src/pages/Unauthorized";
 
 // 登录前白名单
 export const whiteList: string[] = [];
@@ -13,24 +13,29 @@ export const whiteList: string[] = [];
 export const blackList: string[] = [];
 
 export const normalRoutes: NormalRoute[] = [
-  { path: "/login", exact: true, component: Login }
+  { path: "/", exact: true, redirect: "/dashboard" },
+  { path: "/login", exact: true, component: Login, title: "登录" }
 ];
 
 export const authorizedRoutes: AuthorizedRoute[] = [
   {
-    path: "/",
+    path: "/dashboard",
     exact: true,
-    redirect: "/dashboard",
     component: HomePage,
     permissions: ["admin"],
-    breadcrumb: [],
-    unauthorized: NotAuthorize
+    breadcrumb: ["/dashboard"],
+    title: "dashboard",
+    unauthorized: Unauthorized
   },
   {
     path: "/dashboard/user",
+    exact: true,
     component: User,
     permissions: ["admin"],
-    breadcrumb: [],
-    unauthorized: NotAuthorize
+    breadcrumb: ["/dashboard", "/dashboard/user"],
+    title: "用户",
+    unauthorized: Unauthorized
   }
 ];
+
+export const combineRoutes = [...normalRoutes, ...authorizedRoutes];

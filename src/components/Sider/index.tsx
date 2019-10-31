@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import memoize from "memoize-one";
 import { Menu, Icon } from "antd";
@@ -6,17 +6,18 @@ import formatMenuPath from "./utils/formatMenuPath";
 import getFlatMenuKeys from "./utils/getFlatMenuKeys";
 import getMeunMatchKeys from "./utils/getMeunMatchKeys";
 import urlToList from "./utils/urlToList";
+import "./index.scss";
 
 const { SubMenu } = Menu;
 
-type menu = {
+export type IMenu = {
   name: string;
   path: string;
   icon?: string;
-  children?: menu[];
+  children?: IMenu[];
 };
 
-interface IProps {
+export interface IProps {
   prefixCls: string;
   className: string;
   style: {};
@@ -24,7 +25,7 @@ interface IProps {
   appName: string;
   appLogo: string;
   appBaseUrl: string;
-  menuData: menu[];
+  menuData: IMenu[];
   pathname: string;
 }
 
@@ -32,7 +33,7 @@ interface IState {
   openKeys: string[];
 }
 
-export default class Sider extends Component<IProps, IState> {
+export default class Sider extends PureComponent<IProps, IState> {
   static defaultProps: Partial<IProps> = {
     prefixCls: "react-sider",
     className: "",
@@ -45,9 +46,9 @@ export default class Sider extends Component<IProps, IState> {
     pathname: "/"
   };
 
-  selectedKeys: (pathname: string, fullPathMenu: menu[]) => string[];
+  selectedKeys: (pathname: string, fullPathMenu: IMenu[]) => string[];
 
-  fullPathMenuData: (menuData: menu[]) => menu[];
+  fullPathMenuData: (menuData: IMenu[]) => IMenu[];
 
   constructor(props: IProps) {
     super(props);
@@ -69,7 +70,7 @@ export default class Sider extends Component<IProps, IState> {
     });
   };
 
-  renderMenu = (data: menu[]) =>
+  renderMenu = (data: IMenu[]) =>
     data.map(item => {
       if (item.children) {
         return (
@@ -103,8 +104,10 @@ export default class Sider extends Component<IProps, IState> {
     return (
       <Link to={appBaseUrl} href={appBaseUrl}>
         <div className={`${prefixCls}-header`}>
-          <img className={`${prefixCls}-logo`} src={appLogo} alt="logo" />
-          <div className={`${prefixCls}-appName`}>{appName}</div>
+          {appLogo && (
+            <img className={`${prefixCls}-logo`} src={appLogo} alt="logo" />
+          )}
+          {appName && <div className={`${prefixCls}-appName`}>{appName}</div>}
         </div>
       </Link>
     );

@@ -1,8 +1,12 @@
+import { routerMiddleware } from "connected-react-router";
 import { createStore, applyMiddleware, compose } from "redux";
-import reducer from "./reducers";
+import { createBrowserHistory } from "history";
+import createRootReducer from "./reducers";
 import thunk from "redux-thunk";
 
-const middlewares = [thunk];
+export const history = createBrowserHistory();
+
+const middlewares = [routerMiddleware(history), thunk];
 
 if (process.env.NODE_ENV === `development`) {
   // eslint-disable-next-line
@@ -14,6 +18,6 @@ const composeEnhancers =
   (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(...middlewares));
-const store = createStore(reducer, enhancer);
+const store = createStore(createRootReducer(history), enhancer);
 
 export default store;

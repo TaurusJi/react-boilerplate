@@ -10,21 +10,23 @@ type RCType = typeof React.Component | React.FC;
 
 export type AuthorizedRoute = {
   path: string;
+  title: string;
   exact?: boolean;
   layout?: RCType;
   component: RCType;
   redirect?: string;
   permissions: string[];
   unauthorized?: RCType;
-  breadcrumb?: string[];
+  breadcrumb: string[];
 };
 
 export type NormalRoute = {
   path: string;
+  title?: string;
   exact?: boolean;
   layout?: RCType;
   redirect?: string;
-  component: RCType;
+  component?: RCType;
   breadcrumb?: string[];
 };
 
@@ -125,7 +127,7 @@ export default class AclRouter extends Component<IProps> {
         {...omitRouteRenderProperties(route)}
         render={props => (
           <NormalLayout {...props}>
-            <RouteComponent {...props} />
+            {RouteComponent && <RouteComponent {...props} />}
           </NormalLayout>
         )}
       />
