@@ -6,17 +6,33 @@ import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { matchRoutes } from "react-router-config";
 import { combineRoutes } from "src/config/routes";
-import { connect } from "react-redux";
-import { State } from "src/store/reducers";
-import { isEmpty } from "lodash";
+import { AuthorizedRoute } from "src/components/AclRouter/AclRouter";
+import { connect } from "src/store/connect";
+import { isEmpty, get } from "lodash";
 import logo from "src/assets/logo.svg";
 import "./BasicLayout.scss";
 
 const { Footer, Sider, Content } = Layout;
 
-class AuthorizedLayout extends PureComponent<RouteComponentProps & any> {
+interface IProps {
+  prefixCls: string;
+}
+
+interface IConnectProps {
+  route: Partial<AuthorizedRoute>;
+}
+
+@connect<{}, RouteComponentProps & IProps>(state => {
+  const pathname = state.router.location.pathname;
+  const match = matchRoutes(combineRoutes, pathname);
+  return { route: get(match, "[0].route", {}) };
+})
+class AuthorizedLayout extends PureComponent<
+  RouteComponentProps & IProps & IConnectProps
+> {
   static defaultProps = {
-    prefixCls: "basicLayout"
+    prefixCls: "basicLayout",
+    route: {}
   };
 
   renderBreadcrumb = () => {
@@ -24,7 +40,8 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & any> {
       prefixCls,
       route: { breadcrumb }
     } = this.props;
-    const breadcrumbData = generateBreadcrumb(breadcrumb);
+    // 用感叹号标识breadcrumb不能为undefined
+    const breadcrumbData = generateBreadcrumb(breadcrumb!);
 
     return (
       <Breadcrumb className={`${prefixCls}-breadcrumb`}>
@@ -133,17 +150,4 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & any> {
   }
 }
 
-const mapStateToProps = (state: State) => {
-  const pathname: string = state.router.location.pathname;
-  const match = matchRoutes<{}>(combineRoutes, pathname);
-  if (match[0]) {
-    return {
-      route: match[0].route
-    };
-  }
-  return {
-    route: ""
-  };
-};
-
-export default connect(mapStateToProps)(AuthorizedLayout);
+export default AuthorizedLayout;

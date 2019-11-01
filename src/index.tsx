@@ -1,5 +1,6 @@
 // polyfill
 import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
 import "core-js/features/array/find";
 import "core-js/features/array/find-index";
 import "core-js/features/array/fill";
