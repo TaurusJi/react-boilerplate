@@ -17,5 +17,13 @@
       }
     },
     "polyfills": ["fetch", "Promise", "URL", "object-assign"]
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
