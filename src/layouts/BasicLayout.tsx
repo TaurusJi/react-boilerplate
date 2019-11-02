@@ -16,20 +16,15 @@ const { Footer, Sider, Content } = Layout;
 
 interface IProps {
   prefixCls: string;
-}
-
-interface IConnectProps {
   route: Partial<AuthorizedRoute>;
 }
 
-@connect<{}, RouteComponentProps & IProps>(state => {
+@connect<{}, RouteComponentProps & Pick<IProps, "prefixCls">>(state => {
   const pathname = state.router.location.pathname;
   const match = matchRoutes(combineRoutes, pathname);
   return { route: get(match, "[0].route", {}) };
 })
-class AuthorizedLayout extends PureComponent<
-  RouteComponentProps & IProps & IConnectProps
-> {
+class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
   static defaultProps = {
     prefixCls: "basicLayout",
     route: {}

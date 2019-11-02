@@ -1,19 +1,25 @@
 import React, { Component, ChangeEvent } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import { Input, Icon, Button } from "antd";
-// import appAction from "app/action";
+import { userLogin } from "src/store/actions/app";
+import { connect } from "src/store/connect";
 import logo from "src/assets/logo.svg";
 import "./index.scss";
 
 interface IProps {
   prefixCls?: string;
-  errorMsg: string;
   isLogin: boolean;
-  loginUser: Function;
 }
 
+@connect<{ loginUser: Function }>(
+  state => ({
+    isLogin: state.app.isLogin
+  }),
+  {
+    loginUser: userLogin
+  }
+)
 class Login extends Component<IProps & RouteComponentProps> {
   static defaultProps = {
     prefixCls: "view-login"
@@ -106,16 +112,4 @@ class Login extends Component<IProps & RouteComponentProps> {
   }
 }
 
-const mapStateToProps = state => ({
-  isLogin: state.app.isLogin,
-  errorMsg: state.app.loginErrorMsg
-});
-
-const mapDispatchToProps = {
-  loginUser: appAction.loginUser
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Login));
+export default withRouter(Login);

@@ -1,16 +1,16 @@
 import { combineReducers } from "redux";
 import { History } from "history";
 import { RouterState, connectRouter } from "connected-react-router";
-import counterReducer from "./counter";
+import appReducer, { AppState } from "./app";
 
 const rootReducer = (history: History) =>
   combineReducers({
-    count: counterReducer,
+    app: appReducer,
     router: connectRouter(history)
   });
 
 export interface State {
-  count: number;
+  app: AppState;
   router: RouterState;
 }
 
