@@ -1,6 +1,6 @@
 import React, { Component, ChangeEvent } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { isEmpty } from "lodash";
+// import { isEmpty } from "lodash";
 import { Input, Icon, Button } from "antd";
 import { userLogin } from "src/store/actions/app";
 import { connect } from "src/store/connect";
@@ -48,20 +48,20 @@ class Login extends Component<IProps & RouteComponentProps> {
     this.setState({ [key]: e.target.value });
   };
 
-  handleLogin = () => {
-    const { loginUser } = this.props;
-    const { username, password } = this.state;
-    loginUser(username, password);
-  };
+  // handleLogin = () => {
+  //   const { loginUser } = this.props;
+  //   const { username, password } = this.state;
+  //   loginUser(username, password);
+  // };
 
-  renderErrorMsg = () => {
-    const { errorMsg, prefixCls } = this.props;
-    const show = !isEmpty(errorMsg);
-    if (show) {
-      return <div className={`${prefixCls}-errorMsg`}>{errorMsg}</div>;
-    }
-    return null;
-  };
+  // renderErrorMsg = () => {
+  //   const { errorMsg, prefixCls } = this.props;
+  //   const show = !isEmpty(errorMsg);
+  //   if (show) {
+  //     return <div className={`${prefixCls}-errorMsg`}>{errorMsg}</div>;
+  //   }
+  //   return null;
+  // };
 
   renderLoginPanel = () => {
     const { prefixCls } = this.props;
@@ -83,7 +83,7 @@ class Login extends Component<IProps & RouteComponentProps> {
           prefix={<Icon type="user" style={{ color: "rgba(0, 0, 0, .25)" }} />}
           value={username}
           onChange={e => this.onInputChange(e, "username")}
-          onPressEnter={this.handleLogin}
+          // onPressEnter={this.handleLogin}
         />
         <Input
           className={`${prefixCls}-loginInput`}
@@ -92,16 +92,16 @@ class Login extends Component<IProps & RouteComponentProps> {
           prefix={<Icon type="lock" style={{ color: "rgba(0, 0, 0, .25)" }} />}
           value={password}
           onChange={e => this.onInputChange(e, "password")}
-          onPressEnter={this.handleLogin}
+          // onPressEnter={this.handleLogin}
         />
         <Button
           className={`${prefixCls}-loginBtn`}
           type="primary"
-          onClick={this.handleLogin}
+          // onClick={this.handleLogin}
         >
           登录
         </Button>
-        <div>{this.renderErrorMsg()}</div>
+        {/* <div>{this.renderErrorMsg()}</div> */}
       </div>
     );
   };
