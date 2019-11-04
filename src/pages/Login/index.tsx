@@ -1,9 +1,10 @@
-import React, { Component, ChangeEvent } from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import React, { PureComponent, ChangeEvent } from "react";
+import { RouteComponentProps } from "react-router-dom";
 // import { isEmpty } from "lodash";
 import { Input, Icon, Button } from "antd";
 import { userLogin } from "src/store/actions/app";
 import { connect } from "src/store/connect";
+import { stringify } from "querystring";
 import logo from "src/assets/logo.svg";
 import "./index.scss";
 
@@ -12,7 +13,7 @@ interface IProps {
   isLogin: boolean;
 }
 
-@connect<{ loginUser: Function }>(
+@connect<{ loginUser(): void }>(
   state => ({
     isLogin: state.app.isLogin
   }),
@@ -20,7 +21,7 @@ interface IProps {
     loginUser: userLogin
   }
 )
-class Login extends Component<IProps & RouteComponentProps> {
+class Login extends PureComponent<IProps & RouteComponentProps> {
   static defaultProps = {
     prefixCls: "view-login"
   };
@@ -48,6 +49,13 @@ class Login extends Component<IProps & RouteComponentProps> {
     this.setState({ [key]: e.target.value });
   };
 
+  handleLogin = () => {
+    const { history } = this.props;
+    history.push({
+      pathname: "/faq",
+      search: stringify({ a: 1 })
+    });
+  };
   // handleLogin = () => {
   //   const { loginUser } = this.props;
   //   const { username, password } = this.state;
@@ -97,7 +105,7 @@ class Login extends Component<IProps & RouteComponentProps> {
         <Button
           className={`${prefixCls}-loginBtn`}
           type="primary"
-          // onClick={this.handleLogin}
+          onClick={this.handleLogin}
         >
           登录
         </Button>
@@ -112,4 +120,4 @@ class Login extends Component<IProps & RouteComponentProps> {
   }
 }
 
-export default withRouter(Login);
+export default Login;

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { map, isNil } from "lodash";
 import omitRouteRenderProperties from "./utils/omitRouteRenderProperties";
@@ -41,7 +41,7 @@ interface IProps {
   notFound: RCType;
 }
 
-export default class AclRouter extends Component<IProps> {
+export default class AclRouter extends PureComponent<IProps> {
   static defaultProps = {
     authorities: "",
     normalRoutes: [],
@@ -73,9 +73,7 @@ export default class AclRouter extends Component<IProps> {
     } = route;
     const hasPermission = checkPermissions(authorities, permissions);
 
-    // todo 登录前访问权限路由 重定向至登录页
-    // todo 登录后访问权限路由 若无权限则显示无权限页
-
+    // 登录后访问权限路由 若无权限则显示无权限页
     if (!hasPermission && route.unauthorized) {
       return (
         <Route

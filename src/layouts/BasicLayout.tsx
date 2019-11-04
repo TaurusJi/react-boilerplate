@@ -9,6 +9,8 @@ import { combineRoutes } from "src/config/routes";
 import { AuthorizedRoute } from "src/components/AclRouter/AclRouter";
 import { connect } from "src/store/connect";
 import { isEmpty, get } from "lodash";
+import LoginChecker from "src/components/LoginChecker";
+import withRouteGuard from "src/components/WithRouteGuard";
 import logo from "src/assets/logo.svg";
 import "./BasicLayout.scss";
 
@@ -22,8 +24,9 @@ interface IProps {
 @connect<{}, RouteComponentProps & Pick<IProps, "prefixCls">>(state => {
   const pathname = state.router.location.pathname;
   const match = matchRoutes(combineRoutes, pathname);
-  return { route: get(match, "[0].route", {}) };
+  return { route: get(match[0], "route", {}) };
 })
+@withRouteGuard()
 class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
   static defaultProps = {
     prefixCls: "basicLayout",
@@ -35,6 +38,7 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
       prefixCls,
       route: { breadcrumb }
     } = this.props;
+
     // 用感叹号标识breadcrumb不能为undefined
     const breadcrumbData = generateBreadcrumb(breadcrumb!);
 
@@ -125,22 +129,24 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
     } = this.props;
 
     return (
-      <Layout>
-        <Sider width={256} style={{ minHeight: "100vh" }}>
-          <MenuSider
-            menuData={menuData}
-            pathname={pathname}
-            appLogo={logo}
-            appName="React Boilerplate"
-          ></MenuSider>
-        </Sider>
-        <Layout className={`${prefixCls}-content`}>
-          {this.renderHeader()}
-          {this.renderPageHeader()}
-          {this.renderContent()}
-          {this.renderFooter()}
+      <LoginChecker>
+        <Layout>
+          <Sider width={256} style={{ minHeight: "100vh" }}>
+            <MenuSider
+              menuData={menuData}
+              pathname={pathname}
+              appLogo={logo}
+              appName="React Boilerplate"
+            ></MenuSider>
+          </Sider>
+          <Layout className={`${prefixCls}-content`}>
+            {this.renderHeader()}
+            {this.renderPageHeader()}
+            {this.renderContent()}
+            {this.renderFooter()}
+          </Layout>
         </Layout>
-      </Layout>
+      </LoginChecker>
     );
   }
 }

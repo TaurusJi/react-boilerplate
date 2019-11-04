@@ -11,6 +11,10 @@ export const menuData: IMenu[] = [
         path: "user"
       },
       {
+        name: "表单",
+        path: "form"
+      },
+      {
         name: "分析页",
         path: "analysis",
         children: [

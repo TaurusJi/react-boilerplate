@@ -1,10 +1,11 @@
 import { routerMiddleware } from "connected-react-router";
 import { createStore, applyMiddleware, compose } from "redux";
-import { createBrowserHistory } from "history";
+import { createHashHistory } from "history";
 import createRootReducer from "./reducers";
 import thunk from "redux-thunk";
 
-export const history = createBrowserHistory();
+// export const history = createBrowserHistory();
+export const history = createHashHistory();
 
 const middlewares = [routerMiddleware(history), thunk];
 

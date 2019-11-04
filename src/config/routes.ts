@@ -1,6 +1,8 @@
 import HomePage from "src/pages/HomePage";
 import Login from "src/pages/Login";
+import FAQ from "src/pages/FAQ";
 import User from "src/pages/User";
+import Form from "src/pages/User/Form";
 import {
   NormalRoute,
   AuthorizedRoute
@@ -13,8 +15,9 @@ export const whiteList: string[] = [];
 export const blackList: string[] = [];
 
 export const normalRoutes: NormalRoute[] = [
-  { path: "/", exact: true, redirect: "/dashboard" },
-  { path: "/login", exact: true, component: Login, title: "登录" }
+  { path: "/", exact: true, redirect: "/dashboard/user" },
+  { path: "/login", exact: true, component: Login, title: "登录" },
+  { path: "/faq", exact: true, component: FAQ, title: "FAQ" }
 ];
 
 export const authorizedRoutes: AuthorizedRoute[] = [
@@ -34,6 +37,15 @@ export const authorizedRoutes: AuthorizedRoute[] = [
     permissions: ["admin"],
     breadcrumb: ["/dashboard", "/dashboard/user"],
     title: "用户",
+    unauthorized: Unauthorized
+  },
+  {
+    path: "/dashboard/form",
+    exact: true,
+    component: Form,
+    permissions: ["admin"],
+    breadcrumb: ["/dashboard", "/dashboard/form"],
+    title: "表单",
     unauthorized: Unauthorized
   }
 ];
