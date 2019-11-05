@@ -1,6 +1,5 @@
-import React, { PureComponent } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import memoize from "memoize-one";
 import { Menu, Icon } from "antd";
 import formatMenuPath from "./utils/formatMenuPath";
 import getFlatMenuKeys from "./utils/getFlatMenuKeys";
@@ -10,14 +9,14 @@ import "./index.scss";
 
 const { SubMenu } = Menu;
 
-export type IMenu = {
+export interface IMenu {
   name: string;
   path: string;
   icon?: string;
   children?: IMenu[];
-};
+}
 
-export interface IProps {
+interface IProps {
   prefixCls: string;
   className: string;
   style: {};
@@ -29,48 +28,31 @@ export interface IProps {
   pathname: string;
 }
 
-interface IState {
-  openKeys: string[];
-}
+const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
+  const {
+    pathname,
+    menuData,
+    prefixCls,
+    appBaseUrl,
+    appLogo,
+    appName,
+    className,
+    style,
+    width
+  } = props;
 
-export default class Sider extends PureComponent<IProps, IState> {
-  static defaultProps: Partial<IProps> = {
-    prefixCls: "react-sider",
-    className: "",
-    style: {},
-    appName: "",
-    appLogo: "",
-    appBaseUrl: "/",
-    width: 256,
-    menuData: [],
-    pathname: "/"
-  };
-
-  selectedKeys: (pathname: string, fullPathMenu: IMenu[]) => string[];
-
-  fullPathMenuData: (menuData: IMenu[]) => IMenu[];
-
-  constructor(props: IProps) {
-    super(props);
-    this.fullPathMenuData = memoize(menuData => formatMenuPath(menuData));
-    this.selectedKeys = memoize((pathname, fullPathMenu) =>
-      getMeunMatchKeys(getFlatMenuKeys(fullPathMenu), urlToList(pathname))
+  const fullPathMenuData: IMenu[] = useMemo(() => {
+    return formatMenuPath(menuData);
+  }, [menuData]);
+  const selectedKeys: string[] = useMemo(() => {
+    return getMeunMatchKeys(
+      getFlatMenuKeys(fullPathMenuData),
+      urlToList(pathname)
     );
+  }, [pathname, fullPathMenuData]);
+  const [openKeys, setOpenKeys] = useState(selectedKeys);
 
-    const { pathname, menuData } = props;
-
-    this.state = {
-      openKeys: this.selectedKeys(pathname, this.fullPathMenuData(menuData))
-    };
-  }
-
-  handleOpenChange = (openKeys: string[]) => {
-    this.setState({
-      openKeys
-    });
-  };
-
-  renderMenu = (data: IMenu[]) =>
+  const renderMenu = (data: IMenu[]) =>
     data.map(item => {
       if (item.children) {
         return (
@@ -83,7 +65,7 @@ export default class Sider extends PureComponent<IProps, IState> {
               </span>
             }
           >
-            {this.renderMenu(item.children)}
+            {renderMenu(item.children)}
           </SubMenu>
         );
       }
@@ -98,58 +80,56 @@ export default class Sider extends PureComponent<IProps, IState> {
       );
     });
 
-  renderSiderHeader = () => {
-    const { appBaseUrl, prefixCls, appLogo, appName } = this.props;
+  const renderSiderHeader = () => (
+    <Link to={appBaseUrl} href={appBaseUrl}>
+      <div className={`${prefixCls}-header`}>
+        {appLogo && (
+          <img className={`${prefixCls}-logo`} src={appLogo} alt="logo" />
+        )}
+        {appName && <div className={`${prefixCls}-appName`}>{appName}</div>}
+      </div>
+    </Link>
+  );
 
-    return (
-      <Link to={appBaseUrl} href={appBaseUrl}>
-        <div className={`${prefixCls}-header`}>
-          {appLogo && (
-            <img className={`${prefixCls}-logo`} src={appLogo} alt="logo" />
-          )}
-          {appName && <div className={`${prefixCls}-appName`}>{appName}</div>}
-        </div>
-      </Link>
-    );
+  const renderSiderBody = () => (
+    <div className={`${prefixCls}-body`}>
+      <Menu
+        style={{ padding: "16px 0", width: "100%" }}
+        mode="inline"
+        theme="dark"
+        openKeys={openKeys}
+        selectedKeys={selectedKeys}
+        onOpenChange={setOpenKeys}
+      >
+        {renderMenu(fullPathMenuData)}
+      </Menu>
+    </div>
+  );
+
+  const classes = `${prefixCls} ${className}`;
+  const styles = {
+    ...style,
+    width
   };
 
-  renderSiderBody = () => {
-    const { prefixCls, pathname, menuData } = this.props;
-    const { openKeys } = this.state;
+  return (
+    <div className={classes} style={styles}>
+      {renderSiderHeader()}
+      {renderSiderBody()}
+    </div>
+  );
+};
 
-    return (
-      <div className={`${prefixCls}-body`}>
-        <Menu
-          style={{ padding: "16px 0", width: "100%" }}
-          mode="inline"
-          theme="dark"
-          openKeys={openKeys}
-          selectedKeys={this.selectedKeys(
-            pathname,
-            this.fullPathMenuData(menuData)
-          )}
-          onOpenChange={this.handleOpenChange}
-        >
-          {this.renderMenu(this.fullPathMenuData(menuData))}
-        </Menu>
-      </div>
-    );
-  };
+Sider.defaultProps = {
+  prefixCls: "react-sider",
+  className: "",
+  style: {},
+  appName: "",
+  appLogo: "",
+  appBaseUrl: "/",
+  width: 256,
+  menuData: [],
+  pathname: "/"
+};
 
-  render() {
-    const { prefixCls, className, style, width } = this.props;
-
-    const classes = `${prefixCls} ${className}`;
-    const styles = {
-      ...style,
-      width
-    };
-
-    return (
-      <div className={classes} style={styles}>
-        {this.renderSiderHeader()}
-        {this.renderSiderBody()}
-      </div>
-    );
-  }
-}
+export default Sider;

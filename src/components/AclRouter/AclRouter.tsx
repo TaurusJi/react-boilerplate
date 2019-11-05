@@ -69,7 +69,8 @@ export default class AclRouter extends PureComponent<IProps> {
       path,
       redirect,
       component: RouteComponent,
-      unauthorized: Unauthorized
+      unauthorized: Unauthorized,
+      layout: Layout
     } = route;
     const hasPermission = checkPermissions(authorities, permissions);
 
@@ -79,11 +80,17 @@ export default class AclRouter extends PureComponent<IProps> {
         <Route
           key={path}
           {...omitRouteRenderProperties(route)}
-          render={props => (
-            <AuthorizedLayout {...props}>
-              {Unauthorized && <Unauthorized {...props} />}
-            </AuthorizedLayout>
-          )}
+          render={props =>
+            Layout ? (
+              <Layout {...props}>
+                {Unauthorized && <Unauthorized {...props} />}
+              </Layout>
+            ) : (
+              <AuthorizedLayout {...props}>
+                {Unauthorized && <Unauthorized {...props} />}
+              </AuthorizedLayout>
+            )
+          }
         />
       );
     }
@@ -96,11 +103,17 @@ export default class AclRouter extends PureComponent<IProps> {
       <Route
         key={path}
         {...omitRouteRenderProperties(route)}
-        render={props => (
-          <AuthorizedLayout {...props}>
-            <RouteComponent {...props} />
-          </AuthorizedLayout>
-        )}
+        render={props =>
+          Layout ? (
+            <Layout {...props}>
+              <RouteComponent {...props} />
+            </Layout>
+          ) : (
+            <AuthorizedLayout {...props}>
+              <RouteComponent {...props} />
+            </AuthorizedLayout>
+          )
+        }
       />
     );
   };
@@ -111,8 +124,6 @@ export default class AclRouter extends PureComponent<IProps> {
   renderNormalRoute = (route: NormalRoute) => {
     const { normalLayout: NormalLayout } = this.props;
     const { redirect, path, component: RouteComponent } = route;
-
-    // todo 登录后访问登录页 重定向至dashboard(首页)
 
     // check if current route is a redirect route (doesn't have component but redirect path)
     if (isNil(RouteComponent) && !isNil(redirect)) {

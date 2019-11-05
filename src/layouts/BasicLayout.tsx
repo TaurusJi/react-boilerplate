@@ -39,8 +39,11 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
       route: { breadcrumb }
     } = this.props;
 
-    // 用感叹号标识breadcrumb不能为undefined
-    const breadcrumbData = generateBreadcrumb(breadcrumb!);
+    if (!breadcrumb) {
+      return null;
+    }
+
+    const breadcrumbData = generateBreadcrumb(breadcrumb);
 
     return (
       <Breadcrumb className={`${prefixCls}-breadcrumb`}>

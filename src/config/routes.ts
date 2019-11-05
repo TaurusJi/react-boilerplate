@@ -9,11 +9,6 @@ import {
 } from "src/components/AclRouter/AclRouter";
 import Unauthorized from "src/pages/Unauthorized";
 
-// 登录前白名单
-export const whiteList: string[] = [];
-// 登录后黑名单
-export const blackList: string[] = [];
-
 export const normalRoutes: NormalRoute[] = [
   { path: "/", exact: true, redirect: "/dashboard/user" },
   { path: "/login", exact: true, component: Login, title: "登录" },
