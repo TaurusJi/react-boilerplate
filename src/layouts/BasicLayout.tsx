@@ -24,9 +24,9 @@ interface IProps {
 @connect<{}, RouteComponentProps & Pick<IProps, "prefixCls">>(state => {
   const pathname = state.router.location.pathname;
   const match = matchRoutes(combineRoutes, pathname);
-  return { route: get(match[0], "route", {}) };
+
+  return { route: get(match[match.length - 1], "route", {}) };
 })
-@withRouteGuard()
 class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
   static defaultProps = {
     prefixCls: "basicLayout",
@@ -42,6 +42,7 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
     if (!breadcrumb) {
       return null;
     }
+    console.log(breadcrumb);
 
     const breadcrumbData = generateBreadcrumb(breadcrumb);
 

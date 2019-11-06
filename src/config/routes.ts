@@ -39,15 +39,15 @@ export const authorizedRoutes: AuthorizedRoute[] = [
     path: "/",
     component: AuthorizedLayout,
     permissions: ["admin"],
-    breadcrumb: ["/"],
     title: "首页",
+    breadcrumb: ["/"],
     unauthorized: Unauthorized,
     routes: [
       {
         path: "/dashboard",
         permissions: ["admin"],
-        breadcrumb: ["/dashboard"],
-        title: "dashboard",
+        breadcrumb: ["/", "/dashboard"],
+        title: "仪表盘",
         unauthorized: Unauthorized,
         routes: [
           {
@@ -55,7 +55,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             component: User,
             exact: true,
             permissions: ["admin"],
-            breadcrumb: ["/dashboard", "/dashboard/user"],
+            breadcrumb: ["/", "/dashboard", "/dashboard/user"],
             title: "用户",
             unauthorized: Unauthorized
           },
@@ -64,7 +64,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             component: Form,
             exact: true,
             permissions: ["user"],
-            breadcrumb: ["/dashboard", "/dashboard/form"],
+            breadcrumb: ["/", "/dashboard", "/dashboard/form"],
             title: "表单",
             unauthorized: Unauthorized
           },
@@ -76,8 +76,8 @@ export const authorizedRoutes: AuthorizedRoute[] = [
       {
         path: "/billboard",
         permissions: ["admin"],
-        breadcrumb: ["/billboard"],
-        title: "billboard",
+        breadcrumb: ["/", "/billboard"],
+        title: "排行榜",
         unauthorized: Unauthorized,
         routes: [
           {
@@ -85,7 +85,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             component: User,
             exact: true,
             permissions: ["user"],
-            breadcrumb: ["/billboard", "/billboard/user"],
+            breadcrumb: ["/", "/billboard", "/billboard/user"],
             title: "用户",
             unauthorized: Unauthorized
           },
@@ -94,7 +94,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             component: Form,
             exact: true,
             permissions: ["admin"],
-            breadcrumb: ["/billboard", "/billboard/form"],
+            breadcrumb: ["/", "/billboard", "/billboard/form"],
             title: "表单",
             unauthorized: Unauthorized
           },
@@ -107,4 +107,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
   }
 ];
 
-export const combineRoutes = [...normalRoutes, ...authorizedRoutes];
+export const combineRoutes: Array<NormalRoute & AuthorizedRoute> = [
+  ...normalRoutes,
+  ...authorizedRoutes
+];
