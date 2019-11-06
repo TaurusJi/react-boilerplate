@@ -2,7 +2,7 @@ import { isEmpty, isArray, isString, isFunction, indexOf } from "lodash";
 
 const checkPermissions = <T>(
   authorities: T,
-  permissions: string[]
+  permissions?: string[]
 ): boolean => {
   if (isEmpty(permissions)) {
     return true;

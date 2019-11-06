@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 
-const OMIT_ROUTE_RENDER_PROPERTIES = ["render", "component"];
+const OMIT_ROUTE_RENDER_PROPERTIES = ["render", "component", "routes"];
 
 const omitRouteRenderProperties: <T extends object>(
   route: T
