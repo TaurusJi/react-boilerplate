@@ -15,10 +15,6 @@ export const menuData: IMenu[] = [
         path: "form"
       },
       {
-        name: "测试",
-        path: "test"
-      },
-      {
         name: "分析页",
         path: "analysis",
         children: [
@@ -31,6 +27,21 @@ export const menuData: IMenu[] = [
             path: "offline"
           }
         ]
+      }
+    ]
+  },
+  {
+    name: "广告牌",
+    icon: "billboard",
+    path: "billboard",
+    children: [
+      {
+        name: "用户",
+        path: "user"
+      },
+      {
+        name: "表单",
+        path: "form"
       }
     ]
   }

@@ -13,11 +13,6 @@ import NotFound from "src/pages/NotFound";
 
 export const normalRoutes: NormalRoute[] = [
   {
-    path: "/",
-    exact: true,
-    redirect: "/dashboard/user"
-  },
-  {
     path: "/faq",
     component: FAQ,
     title: "FAQ"
@@ -41,33 +36,72 @@ export const normalRoutes: NormalRoute[] = [
 
 export const authorizedRoutes: AuthorizedRoute[] = [
   {
-    path: "/dashboard",
+    path: "/",
     component: AuthorizedLayout,
     permissions: ["admin"],
-    breadcrumb: ["/dashboard"],
-    title: "dashboard",
+    breadcrumb: ["/"],
+    title: "首页",
     unauthorized: Unauthorized,
     routes: [
       {
-        path: "/dashboard/user",
-        component: User,
-        exact: true,
-        permissions: ["user"],
-        breadcrumb: ["/dashboard", "/dashboard/user"],
-        title: "用户",
-        unauthorized: Unauthorized
-      },
-      {
-        path: "/dashboard/form",
-        component: Form,
-        exact: true,
+        path: "/dashboard",
         permissions: ["admin"],
-        breadcrumb: ["/dashboard", "/dashboard/form"],
-        title: "表单",
-        unauthorized: Unauthorized
+        breadcrumb: ["/dashboard"],
+        title: "dashboard",
+        unauthorized: Unauthorized,
+        routes: [
+          {
+            path: "/dashboard/user",
+            component: User,
+            exact: true,
+            permissions: ["admin"],
+            breadcrumb: ["/dashboard", "/dashboard/user"],
+            title: "用户",
+            unauthorized: Unauthorized
+          },
+          {
+            path: "/dashboard/form",
+            component: Form,
+            exact: true,
+            permissions: ["user"],
+            breadcrumb: ["/dashboard", "/dashboard/form"],
+            title: "表单",
+            unauthorized: Unauthorized
+          },
+          {
+            component: NotFound
+          }
+        ]
       },
       {
-        component: NotFound
+        path: "/billboard",
+        permissions: ["admin"],
+        breadcrumb: ["/billboard"],
+        title: "billboard",
+        unauthorized: Unauthorized,
+        routes: [
+          {
+            path: "/billboard/user",
+            component: User,
+            exact: true,
+            permissions: ["user"],
+            breadcrumb: ["/billboard", "/billboard/user"],
+            title: "用户",
+            unauthorized: Unauthorized
+          },
+          {
+            path: "/billboard/form",
+            component: Form,
+            exact: true,
+            permissions: ["admin"],
+            breadcrumb: ["/billboard", "/billboard/form"],
+            title: "表单",
+            unauthorized: Unauthorized
+          },
+          {
+            component: NotFound
+          }
+        ]
       }
     ]
   }

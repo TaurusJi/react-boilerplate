@@ -11,6 +11,8 @@ type RCType = typeof React.Component | React.FC;
 export interface AuthorizedRoute {
   key?: string;
   path?: string;
+  text?: string;
+  icon?: string;
   title?: string;
   exact?: boolean;
   routes?: AuthorizedRoute[];
@@ -24,6 +26,8 @@ export interface AuthorizedRoute {
 export interface NormalRoute {
   key?: string;
   path?: string;
+  text?: string;
+  icon?: string;
   title?: string;
   exact?: boolean;
   routes?: NormalRoute[];
@@ -93,7 +97,7 @@ class AclRouter extends PureComponent<IProps> {
           path,
           key,
           redirect,
-          component: Component,
+          component: RouteComponent,
           unauthorized: Unauthorized
         } = route;
         const hasPermission = checkPermissions(authorities, permissions);
@@ -130,13 +134,15 @@ class AclRouter extends PureComponent<IProps> {
                   location: props.location
                 }
               );
-              return (
-                Component && (
-                  <Component {...props} {...extraProps} route={route}>
+              if (RouteComponent) {
+                return (
+                  <RouteComponent {...props} {...extraProps} route={route}>
                     {childRoutes}
-                  </Component>
-                )
-              );
+                  </RouteComponent>
+                );
+              } else {
+                return childRoutes;
+              }
             }}
           />
         );
@@ -169,13 +175,15 @@ class AclRouter extends PureComponent<IProps> {
                   location: props.location
                 }
               );
-              return (
-                RouteComponent && (
+              if (RouteComponent) {
+                return (
                   <RouteComponent {...props} {...extraProps} route={route}>
                     {childRoutes}
                   </RouteComponent>
-                )
-              );
+                );
+              } else {
+                return childRoutes;
+              }
             }}
           />
         );
