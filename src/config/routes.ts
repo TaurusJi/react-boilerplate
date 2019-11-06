@@ -33,15 +33,9 @@ export const normalRoutes: NormalRoute[] = [
         title: "登录"
       },
       {
-        key: "/404",
-        redirect: "/404"
+        component: NotFound
       }
     ]
-  },
-  {
-    path: "/404",
-    component: NotFound,
-    title: "404"
   }
 ];
 
@@ -58,7 +52,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
         path: "/dashboard/user",
         component: User,
         exact: true,
-        permissions: ["admin"],
+        permissions: ["user"],
         breadcrumb: ["/dashboard", "/dashboard/user"],
         title: "用户",
         unauthorized: Unauthorized
@@ -73,8 +67,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
         unauthorized: Unauthorized
       },
       {
-        key: "/404",
-        redirect: "/404"
+        component: NotFound
       }
     ]
   }

@@ -4,6 +4,7 @@ import { isNil } from "lodash";
 import omitRouteRenderProperties from "./utils/omitRouteRenderProperties";
 import checkPermissions from "./utils/checkPermissions";
 import DefaultLayout from "./DefaultLayout";
+import DefaultNotFound from "./DefaultNotFound";
 
 type RCType = typeof React.Component | React.FC;
 
@@ -37,6 +38,7 @@ interface IProps {
   authorities: string | string[] | Function;
   normalRoutes: NormalRoute[];
   authorizedRoutes: AuthorizedRoute[];
+  notFound: RCType;
 }
 
 class AclRouter extends PureComponent<IProps> {
@@ -45,7 +47,8 @@ class AclRouter extends PureComponent<IProps> {
     normalRoutes: [],
     normalLayout: DefaultLayout,
     authorizedRoutes: [],
-    authorizedLayout: DefaultLayout
+    authorizedLayout: DefaultLayout,
+    notFound: DefaultNotFound
   };
 
   renderRedirectRoute = (route: normalAuthWithJoin) => (
@@ -57,6 +60,23 @@ class AclRouter extends PureComponent<IProps> {
           <Redirect to={route.redirect} from={route.path} exact={route.exact} />
         )
       }
+    />
+  );
+
+  renderNotFoundRoute = (route: normalAuthWithJoin) => (
+    <Route
+      key="notfound"
+      {...omitRouteRenderProperties<normalAuthWithJoin>(route)}
+      render={props => (
+        <Redirect
+          to={{
+            ...props.location,
+            state: { is404: true, component: route.component }
+          }}
+          from={route.path}
+          exact={route.exact}
+        />
+      )}
     />
   );
 
@@ -77,6 +97,11 @@ class AclRouter extends PureComponent<IProps> {
           unauthorized: Unauthorized
         } = route;
         const hasPermission = checkPermissions(authorities, permissions);
+
+        const forKeys = Object.keys(route);
+        if (forKeys.length === 1 && forKeys[0] === "component") {
+          return this.renderNotFoundRoute(route);
+        }
 
         if (!isNil(redirect)) {
           return this.renderRedirectRoute(route);
@@ -159,12 +184,26 @@ class AclRouter extends PureComponent<IProps> {
   );
 
   render() {
-    const { normalRoutes, authorizedRoutes } = this.props;
+    const { normalRoutes, authorizedRoutes, notFound: NotFound } = this.props;
     return (
-      <>
-        {this.renderNormalRoute(normalRoutes)}
-        {this.renderAuthorizedRoute(authorizedRoutes)}
-      </>
+      <Route
+        render={props => {
+          const { state } = props.location;
+          // 参考：https://blog.csdn.net/grepets/article/details/96393575
+          return state && state.is404 ? (
+            state.component ? (
+              <state.component />
+            ) : (
+              <NotFound />
+            )
+          ) : (
+            <>
+              {this.renderNormalRoute(normalRoutes)}
+              {this.renderAuthorizedRoute(authorizedRoutes)}
+            </>
+          );
+        }}
+      />
     );
   }
 }
