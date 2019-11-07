@@ -2,16 +2,13 @@ import Login from "src/pages/Login";
 import FAQ from "src/pages/FAQ";
 import User from "src/pages/User";
 import Form from "src/pages/User/Form";
-import {
-  NormalRoute,
-  AuthorizedRoute
-} from "src/components/AclRouter/AclRouter";
+import { RouteModel } from "src/components/AclRouter/AclRouter";
 import Unauthorized from "src/pages/Unauthorized";
 import AuthorizedLayout from "src/layouts/BasicLayout";
 import NormalLayout from "src/layouts/NormalLayout";
 import NotFound from "src/pages/NotFound";
 
-export const normalRoutes: NormalRoute[] = [
+export const routes: RouteModel[] = [
   {
     path: "/faq",
     component: FAQ,
@@ -31,10 +28,7 @@ export const normalRoutes: NormalRoute[] = [
         component: NotFound
       }
     ]
-  }
-];
-
-export const authorizedRoutes: AuthorizedRoute[] = [
+  },
   {
     path: "/",
     component: AuthorizedLayout,
@@ -105,9 +99,4 @@ export const authorizedRoutes: AuthorizedRoute[] = [
       }
     ]
   }
-];
-
-export const combineRoutes: Array<NormalRoute & AuthorizedRoute> = [
-  ...normalRoutes,
-  ...authorizedRoutes
 ];

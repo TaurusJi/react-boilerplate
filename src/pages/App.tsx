@@ -1,6 +1,6 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
-import { authorizedRoutes, normalRoutes } from "src/config/routes";
+import { routes } from "src/config/routes";
 import AclRouter from "src/components/AclRouter/AclRouter";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "src/store";
@@ -12,8 +12,7 @@ const App: React.FC = () => {
     <ConnectedRouter history={history}>
       <AclRouter
         authorities={authorities}
-        normalRoutes={normalRoutes}
-        authorizedRoutes={authorizedRoutes}
+        routes={routes}
         notFound={NotFound}
       />
     </ConnectedRouter>

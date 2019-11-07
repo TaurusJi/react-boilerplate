@@ -8,14 +8,14 @@ import DefaultNotFound from "./DefaultNotFound";
 
 type RCType = typeof React.Component | React.FC;
 
-export interface AuthorizedRoute {
+export interface RouteModel {
   key?: string;
   path?: string;
   name?: string;
   icon?: string;
   title?: string;
   exact?: boolean;
-  routes?: AuthorizedRoute[];
+  routes?: RouteModel[];
   redirect?: string;
   component?: RCType;
   breadcrumb?: string[];
@@ -23,42 +23,25 @@ export interface AuthorizedRoute {
   unauthorized?: RCType;
 }
 
-export interface NormalRoute {
-  key?: string;
-  path?: string;
-  name?: string;
-  icon?: string;
-  title?: string;
-  exact?: boolean;
-  routes?: NormalRoute[];
-  redirect?: string;
-  component?: RCType;
-  breadcrumb?: string[];
-}
-
-export type normalAuthWithJoin = AuthorizedRoute | NormalRoute;
-
 interface IProps {
   authorities: string | string[] | Function;
-  normalRoutes: NormalRoute[];
-  authorizedRoutes: AuthorizedRoute[];
+  routes: RouteModel[];
   notFound: RCType;
 }
 
 class AclRouter extends PureComponent<IProps> {
   static defaultProps = {
     authorities: "",
-    normalRoutes: [],
     normalLayout: DefaultLayout,
     authorizedRoutes: [],
     authorizedLayout: DefaultLayout,
     notFound: DefaultNotFound
   };
 
-  renderRedirectRoute = (route: normalAuthWithJoin) => (
+  renderRedirectRoute = (route: RouteModel) => (
     <Route
       key={route.path}
-      {...omitRouteRenderProperties<normalAuthWithJoin>(route)}
+      {...omitRouteRenderProperties<RouteModel>(route)}
       render={() =>
         route.redirect && (
           <Redirect to={route.redirect} from={route.path} exact={route.exact} />
@@ -67,10 +50,10 @@ class AclRouter extends PureComponent<IProps> {
     />
   );
 
-  renderNotFoundRoute = (route: normalAuthWithJoin) => (
+  renderNotFoundRoute = (route: RouteModel) => (
     <Route
       key="notfound"
-      {...omitRouteRenderProperties<normalAuthWithJoin>(route)}
+      {...omitRouteRenderProperties<RouteModel>(route)}
       render={props => (
         <Redirect
           to={{
@@ -82,11 +65,7 @@ class AclRouter extends PureComponent<IProps> {
     />
   );
 
-  renderAuthorizedRoute = (
-    routes: AuthorizedRoute[],
-    extraProps = {},
-    switchProps = {}
-  ) => (
+  renderRoutes = (routes: RouteModel[], extraProps = {}, switchProps = {}) => (
     <Switch {...switchProps}>
       {routes.map(route => {
         const { authorities } = this.props;
@@ -125,48 +104,7 @@ class AclRouter extends PureComponent<IProps> {
             key={path || key}
             {...omitRouteRenderProperties(route)}
             render={props => {
-              const childRoutes = this.renderAuthorizedRoute(
-                route.routes || [],
-                {},
-                {
-                  location: props.location
-                }
-              );
-              if (RouteComponent) {
-                return (
-                  <RouteComponent {...props} {...extraProps} route={route}>
-                    {childRoutes}
-                  </RouteComponent>
-                );
-              } else {
-                return childRoutes;
-              }
-            }}
-          />
-        );
-      })}
-    </Switch>
-  );
-
-  renderNormalRoute = (
-    routes: NormalRoute[],
-    extraProps = {},
-    switchProps = {}
-  ) => (
-    <Switch {...switchProps}>
-      {routes.map(route => {
-        const { redirect, path, component: RouteComponent } = route;
-
-        if (isNil(RouteComponent) && !isNil(redirect)) {
-          return this.renderRedirectRoute(route);
-        }
-
-        return (
-          <Route
-            key={path}
-            {...omitRouteRenderProperties(route)}
-            render={props => {
-              const childRoutes = this.renderNormalRoute(
+              const childRoutes = this.renderRoutes(
                 route.routes || [],
                 {},
                 {
@@ -190,7 +128,7 @@ class AclRouter extends PureComponent<IProps> {
   );
 
   render() {
-    const { normalRoutes, authorizedRoutes, notFound: NotFound } = this.props;
+    const { routes, notFound: NotFound } = this.props;
     return (
       <Route
         render={props => {
@@ -203,10 +141,7 @@ class AclRouter extends PureComponent<IProps> {
               <NotFound />
             )
           ) : (
-            <>
-              {this.renderNormalRoute(normalRoutes)}
-              {this.renderAuthorizedRoute(authorizedRoutes)}
-            </>
+            this.renderRoutes(routes)
           );
         }}
       />

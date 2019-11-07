@@ -5,8 +5,8 @@ import MenuSider from "../components/Sider";
 import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { matchRoutes } from "react-router-config";
-import { combineRoutes } from "src/config/routes";
-import { AuthorizedRoute } from "src/components/AclRouter/AclRouter";
+import { routes } from "src/config/routes";
+import { RouteModel } from "src/components/AclRouter/AclRouter";
 import { connect } from "src/store/connect";
 import { isEmpty, get } from "lodash";
 import LoginChecker from "src/components/LoginChecker";
@@ -25,12 +25,12 @@ import {
 const { Sider } = Layout;
 
 interface IProps {
-  route: Partial<AuthorizedRoute>;
+  route: Partial<RouteModel>;
 }
 
 @connect<{}, RouteComponentProps & IProps>(state => {
   const pathname = state.router.location.pathname;
-  const match = matchRoutes(combineRoutes, pathname);
+  const match = matchRoutes(routes, pathname);
 
   return { route: get(match[match.length - 1], "route", {}) };
 })

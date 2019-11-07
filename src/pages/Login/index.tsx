@@ -9,13 +9,8 @@ import { useSelector } from "react-redux";
 import { State } from "src/store/reducers";
 import LoginCss from "./style";
 
-interface IProps {
-  prefixCls?: string;
-  isLogin: boolean;
-}
-
 const Login: React.FC = () => {
-  const [state] = useState({
+  const [state, setState] = useState({
     username: "",
     password: ""
   });
@@ -32,7 +27,7 @@ const Login: React.FC = () => {
     e: ChangeEvent<HTMLInputElement>,
     key: keyof typeof state
   ) => {
-    // setState({ [key]: e.target.value });
+    setState({ ...state, [key]: e.target.value });
   };
 
   const handleLogin = () => {
