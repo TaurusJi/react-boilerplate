@@ -16,11 +16,13 @@ import store from "src/store";
 import App from "./pages/App";
 import { Reset } from "styled-reset";
 import { Normalize } from "styled-normalize";
+import { GlobalCss } from "./styles/Global";
 
 ReactDOM.render(
   <Provider store={store}>
     <Normalize />
     <Reset />
+    <GlobalCss />
     <App />
   </Provider>,
   document.getElementById("root")

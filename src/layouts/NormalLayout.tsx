@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers/index";
 import useReactRouter from "use-react-router";
-import "./NormalLayout.scss";
+import { NormalLayoutCss } from "./style";
 
 const NormalLayout: React.FC = props => {
   const { isLogin } = useSelector((state: State) => state.app);
@@ -15,7 +15,7 @@ const NormalLayout: React.FC = props => {
     }
   }, [history, isLogin]);
 
-  return <div className="normalLayout">{props.children}</div>;
+  return <NormalLayoutCss>{props.children}</NormalLayoutCss>;
 };
 
 export default NormalLayout;

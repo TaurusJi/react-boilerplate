@@ -15,17 +15,17 @@ export const normalRoutes: NormalRoute[] = [
   {
     path: "/faq",
     component: FAQ,
-    title: "FAQ"
+    name: "FAQ"
   },
   {
     path: "/user",
     component: NormalLayout,
-    title: "用户",
+    name: "用户",
     routes: [
       {
         path: "/user/login",
         component: Login,
-        title: "登录"
+        name: "登录"
       },
       {
         component: NotFound
@@ -39,7 +39,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
     path: "/",
     component: AuthorizedLayout,
     permissions: ["admin"],
-    title: "首页",
+    name: "首页",
     breadcrumb: ["/"],
     unauthorized: Unauthorized,
     routes: [
@@ -47,7 +47,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
         path: "/dashboard",
         permissions: ["admin"],
         breadcrumb: ["/", "/dashboard"],
-        title: "仪表盘",
+        name: "仪表盘",
         unauthorized: Unauthorized,
         routes: [
           {
@@ -56,7 +56,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             exact: true,
             permissions: ["admin"],
             breadcrumb: ["/", "/dashboard", "/dashboard/user"],
-            title: "用户",
+            name: "用户",
             unauthorized: Unauthorized
           },
           {
@@ -65,7 +65,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             exact: true,
             permissions: ["user"],
             breadcrumb: ["/", "/dashboard", "/dashboard/form"],
-            title: "表单",
+            name: "表单",
             unauthorized: Unauthorized
           },
           {
@@ -77,7 +77,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
         path: "/billboard",
         permissions: ["admin"],
         breadcrumb: ["/", "/billboard"],
-        title: "排行榜",
+        name: "排行榜",
         unauthorized: Unauthorized,
         routes: [
           {
@@ -86,7 +86,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             exact: true,
             permissions: ["user"],
             breadcrumb: ["/", "/billboard", "/billboard/user"],
-            title: "用户",
+            name: "用户",
             unauthorized: Unauthorized
           },
           {
@@ -95,7 +95,7 @@ export const authorizedRoutes: AuthorizedRoute[] = [
             exact: true,
             permissions: ["admin"],
             breadcrumb: ["/", "/billboard", "/billboard/form"],
-            title: "表单",
+            name: "表单",
             unauthorized: Unauthorized
           },
           {

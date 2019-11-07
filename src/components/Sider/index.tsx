@@ -5,7 +5,7 @@ import formatMenuPath from "./utils/formatMenuPath";
 import getFlatMenuKeys from "./utils/getFlatMenuKeys";
 import getMeunMatchKeys from "./utils/getMeunMatchKeys";
 import urlToList from "./utils/urlToList";
-import "./index.scss";
+import SiderCss from "./style";
 
 const { SubMenu } = Menu;
 
@@ -17,10 +17,6 @@ export interface IMenu {
 }
 
 interface IProps {
-  prefixCls: string;
-  className: string;
-  style: {};
-  width: number;
   appName: string;
   appLogo: string;
   appBaseUrl: string;
@@ -29,27 +25,19 @@ interface IProps {
 }
 
 const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
-  const {
-    pathname,
-    menuData,
-    prefixCls,
-    appBaseUrl,
-    appLogo,
-    appName,
-    className,
-    style,
-    width
-  } = props;
+  const { pathname, menuData, appBaseUrl, appLogo, appName } = props;
 
   const fullPathMenuData: IMenu[] = useMemo(() => {
     return formatMenuPath(menuData);
   }, [menuData]);
+
   const selectedKeys: string[] = useMemo(() => {
     return getMeunMatchKeys(
       getFlatMenuKeys(fullPathMenuData),
       urlToList(pathname)
     );
   }, [pathname, fullPathMenuData]);
+
   const [openKeys, setOpenKeys] = useState(selectedKeys);
 
   const renderMenu = (data: IMenu[]) =>
@@ -82,19 +70,17 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
 
   const renderSiderHeader = () => (
     <Link to={appBaseUrl} href={appBaseUrl}>
-      <div className={`${prefixCls}-header`}>
-        {appLogo && (
-          <img className={`${prefixCls}-logo`} src={appLogo} alt="logo" />
-        )}
-        {appName && <div className={`${prefixCls}-appName`}>{appName}</div>}
+      <div className="header">
+        {appLogo && <img className="logo" src={appLogo} alt="logo" />}
+        {appName && <div className="appName">{appName}</div>}
       </div>
     </Link>
   );
 
   const renderSiderBody = () => (
-    <div className={`${prefixCls}-body`}>
+    <div className="body">
       <Menu
-        style={{ padding: "16px 0", width: "100%" }}
+        className="menu"
         mode="inline"
         theme="dark"
         openKeys={openKeys}
@@ -106,28 +92,18 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
     </div>
   );
 
-  const classes = `${prefixCls} ${className}`;
-  const styles = {
-    ...style,
-    width
-  };
-
   return (
-    <div className={classes} style={styles}>
+    <SiderCss>
       {renderSiderHeader()}
       {renderSiderBody()}
-    </div>
+    </SiderCss>
   );
 };
 
 Sider.defaultProps = {
-  prefixCls: "react-sider",
-  className: "",
-  style: {},
   appName: "",
   appLogo: "",
   appBaseUrl: "/",
-  width: 256,
   menuData: [],
   pathname: "/"
 };

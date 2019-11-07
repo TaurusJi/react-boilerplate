@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
-import "./index.scss";
+import NotFoundCss from "./style";
 
 const NotFound: React.FC = () => {
   return (
-    <div className="view-notFound">
-      <div className="view-notFound-errorCode">404</div>
-      <div className="view-notFound-errorDesc">页面不存在</div>
+    <NotFoundCss>
+      <div className="error-code">404</div>
+      <div className="error-desc">页面不存在</div>
       <Link to="/" href="/">
         <Button type="primary">返回首页</Button>
       </Link>
-    </div>
+    </NotFoundCss>
   );
 };
 

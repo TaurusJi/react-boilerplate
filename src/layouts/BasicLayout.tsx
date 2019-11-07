@@ -13,16 +13,22 @@ import LoginChecker from "src/components/LoginChecker";
 import logo from "src/assets/logo.svg";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
-import "./BasicLayout.scss";
+import {
+  PageHeaderCss,
+  HeaderCss,
+  MenuCss,
+  ContentCss,
+  FooterCss,
+  LayoutCss
+} from "./style";
 
-const { Footer, Sider, Content } = Layout;
+const { Sider } = Layout;
 
 interface IProps {
-  prefixCls: string;
   route: Partial<AuthorizedRoute>;
 }
 
-@connect<{}, RouteComponentProps & Pick<IProps, "prefixCls">>(state => {
+@connect<{}, RouteComponentProps & IProps>(state => {
   const pathname = state.router.location.pathname;
   const match = matchRoutes(combineRoutes, pathname);
 
@@ -30,7 +36,6 @@ interface IProps {
 })
 class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
   static defaultProps = {
-    prefixCls: "basicLayout",
     route: {}
   };
 
@@ -49,7 +54,6 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
 
   renderBreadcrumb = () => {
     const {
-      prefixCls,
       route: { breadcrumb }
     } = this.props;
 
@@ -60,7 +64,7 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
     const breadcrumbData = generateBreadcrumb(breadcrumb);
 
     return (
-      <Breadcrumb className={`${prefixCls}-breadcrumb`}>
+      <Breadcrumb style={{ marginBottom: "16px" }}>
         {breadcrumbData.map(item => (
           <Breadcrumb.Item key={item.href}>{item.text}</Breadcrumb.Item>
         ))}
@@ -69,71 +73,65 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
   };
 
   renderHeader = () => {
-    const { prefixCls } = this.props;
-
     const userMenu = (
-      <Menu>
-        <Menu.Item disabled className={`${prefixCls}-userMenuItem`}>
-          <Icon type="user" className={`${prefixCls}-userMenuIcon`} />
+      <MenuCss>
+        <Menu.Item disabled className="user-menu-item">
+          <Icon type="user" className="user-menu-icon" />
           <span>个人中心</span>
         </Menu.Item>
-        <Menu.Item disabled className={`${prefixCls}-userMenuItem`}>
-          <Icon type="setting" className={`${prefixCls}-userMenuIcon`} />
+        <Menu.Item disabled className="user-menu-item">
+          <Icon type="setting" className="user-menu-icon" />
           <span>设置</span>
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item className={`${prefixCls}-userMenuItem`}>
+        <Menu.Item className="user-menu-item">
           <div role="presentation">
-            <Icon type="logout" className={`${prefixCls}-userMenuIcon`} />
+            <Icon type="logout" className="user-menu-icon" />
             <span>退出登陆</span>
           </div>
         </Menu.Item>
-      </Menu>
+      </MenuCss>
     );
 
     return (
-      <div className={`${prefixCls}-header`}>
+      <HeaderCss>
         <Dropdown overlay={userMenu} placement="bottomRight">
-          <div className={`${prefixCls}-avatarContainer`}>
-            <Avatar className={`${prefixCls}-avatar`}>N</Avatar>
+          <div className="avatar-container">
+            <Avatar className="avatar">N</Avatar>
           </div>
         </Dropdown>
-      </div>
+      </HeaderCss>
     );
   };
 
   renderPageHeader = () => {
     const {
-      prefixCls,
-      route: { title }
+      route: { name }
     } = this.props;
 
-    if (isEmpty(title)) {
+    if (isEmpty(name)) {
       return null;
     }
 
     return (
-      <header className={`${prefixCls}-pageHeader`}>
+      <PageHeaderCss>
         {this.renderBreadcrumb()}
-        <div className={`${prefixCls}-pageTitle`}>{title}</div>
-      </header>
+        <div className="page-title">{name}</div>
+      </PageHeaderCss>
     );
   };
 
   renderContent = () => {
-    const { prefixCls, children } = this.props;
-    return <Content className={`${prefixCls}-mainContent`}>{children}</Content>;
+    const { children } = this.props;
+    return <ContentCss>{children}</ContentCss>;
   };
 
   renderFooter = () => (
-    <Footer className={`${this.props.prefixCls}-footer`}>
-      Copyright © 2019
-    </Footer>
+    <FooterCss className="footer">Copyright © 2019</FooterCss>
   );
 
   render() {
     const {
-      prefixCls,
       location: { pathname }
     } = this.props;
 
@@ -148,12 +146,12 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
               appName="React Boilerplate"
             ></MenuSider>
           </Sider>
-          <Layout className={`${prefixCls}-content`}>
+          <LayoutCss>
             {this.renderHeader()}
             {this.renderPageHeader()}
             {this.renderContent()}
             {this.renderFooter()}
-          </Layout>
+          </LayoutCss>
         </Layout>
       </LoginChecker>
     );

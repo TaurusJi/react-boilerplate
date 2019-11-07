@@ -39,7 +39,7 @@ const generateBreadcrumb: GenerateBreadcrumbType = breadcrumb => {
   });
   return result.map(route => {
     return {
-      text: (route && route.title) || "",
+      text: (route && route.name) || "",
       href: route.path!
     };
   });

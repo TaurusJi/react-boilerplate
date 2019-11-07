@@ -1,67 +1,71 @@
-@import "~src/styles/variable.scss";
+import styled from "styled-components";
 
-.view-login {
+const LoginCss = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   padding: 112px 0 24px 0;
-  &-loginPanel {
+
+  .login-panel {
     display: flex;
     flex-direction: column;
   }
 
-  &-appInfo {
+  .app-info {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 48px;
   }
 
-  &-appLogo {
+  .app-logo {
     height: 40px;
     margin-right: 16px;
   }
 
-  &-appName {
+  .app-name {
     font-size: 32px;
     font-weight: bold;
     white-space: nowrap;
   }
 
-  &-appDesc {
+  .app-desc {
     margin: 12px 0 40px 0;
     color: $font-color-secondary;
     text-align: center;
   }
 
-  &-loginInput {
+  .login-input {
     height: 40px;
     margin-bottom: 24px;
   }
 
-  &-loginBtn {
+  .login-btn {
     height: 40px;
   }
 
-  &-intlSwitch {
+  .intl-switch {
     margin-top: 40px;
   }
 
-  &-intlItem {
+  .intl-item {
     cursor: pointer;
+
     &-active {
       color: $blue-5;
     }
   }
 
-  &-intlSwitchSeparator {
+  .intl-switch-separator {
     margin: 0 12px;
   }
 
-  &-errorMsg {
+  .error-msg {
     text-align: center;
     margin-top: 12px;
     color: $red-6;
   }
-}
+`;
+
+export default LoginCss;

@@ -1,61 +1,47 @@
-import React, { PureComponent, ChangeEvent } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React, { ChangeEvent, useState, useEffect } from "react";
 // import { isEmpty } from "lodash";
 import { Input, Icon, Button } from "antd";
-import { userLogin } from "src/store/actions/app";
-import { connect } from "src/store/connect";
+// import { userLogin } from "src/store/actions/app";
 import { stringify } from "querystring";
 import logo from "src/assets/logo.svg";
-import "./index.scss";
+import useReactRouter from "use-react-router";
+import { useSelector } from "react-redux";
+import { State } from "src/store/reducers";
+import LoginCss from "./style";
 
 interface IProps {
   prefixCls?: string;
   isLogin: boolean;
 }
 
-@connect<{ loginUser(): void }>(
-  state => ({
-    isLogin: state.app.isLogin
-  }),
-  {
-    loginUser: userLogin
-  }
-)
-class Login extends PureComponent<IProps & RouteComponentProps> {
-  static defaultProps = {
-    prefixCls: "view-login"
-  };
-
-  state = {
+const Login: React.FC = () => {
+  const [state] = useState({
     username: "",
     password: ""
-  };
+  });
+  const { history } = useReactRouter();
+  const { isLogin } = useSelector((state: State) => state.app);
 
-  componentDidMount() {
-    const { isLogin, history } = this.props;
+  useEffect(() => {
     if (isLogin) {
       history.push("/");
     }
-  }
+  }, [history, isLogin]);
 
-  componentDidUpdate() {
-    const { isLogin, history } = this.props;
-    if (isLogin) {
-      history.push("/");
-    }
-  }
-
-  onInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
-    this.setState({ [key]: e.target.value });
+  const onInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    key: keyof typeof state
+  ) => {
+    // setState({ [key]: e.target.value });
   };
 
-  handleLogin = () => {
-    const { history } = this.props;
+  const handleLogin = () => {
     history.push({
       pathname: "/faq",
       search: stringify({ a: 1 })
     });
   };
+
   // handleLogin = () => {
   //   const { loginUser } = this.props;
   //   const { username, password } = this.state;
@@ -71,53 +57,40 @@ class Login extends PureComponent<IProps & RouteComponentProps> {
   //   return null;
   // };
 
-  renderLoginPanel = () => {
-    const { prefixCls } = this.props;
-    const { username, password } = this.state;
-    return (
-      <div className={`${prefixCls}-loginPanel`}>
-        <div className={`${prefixCls}-appInfo`}>
-          <img className={`${prefixCls}-appLogo`} src={logo} alt="logo" />
-          <span className={`${prefixCls}-appName`}>React 中后台应用</span>
+  return (
+    <LoginCss>
+      <div className="login-panel">
+        <div className="app-info">
+          <img className="app-logo" src={logo} alt="logo" />
+          <span className="app-name">React 中后台应用</span>
         </div>
-        <div className={`${prefixCls}-appDesc`}>
-          企业级管理系统 React 应用模版
-        </div>
+        <div className="app-desc">企业级管理系统 React 应用模版</div>
         <Input
-          className={`${prefixCls}-loginInput`}
+          className="login-input"
           style={{ height: 40, marginBottom: 24 }}
           placeholder="请输入用户名"
           type="text"
           prefix={<Icon type="user" style={{ color: "rgba(0, 0, 0, .25)" }} />}
-          value={username}
-          onChange={e => this.onInputChange(e, "username")}
+          value={state.username}
+          onChange={e => onInputChange(e, "username")}
           // onPressEnter={this.handleLogin}
         />
         <Input
-          className={`${prefixCls}-loginInput`}
+          className="login-input"
           placeholder="请输入密码"
           type="password"
           prefix={<Icon type="lock" style={{ color: "rgba(0, 0, 0, .25)" }} />}
-          value={password}
-          onChange={e => this.onInputChange(e, "password")}
+          value={state.password}
+          onChange={e => onInputChange(e, "password")}
           // onPressEnter={this.handleLogin}
         />
-        <Button
-          className={`${prefixCls}-loginBtn`}
-          type="primary"
-          onClick={this.handleLogin}
-        >
+        <Button className="login-btn" type="primary" onClick={handleLogin}>
           登录
         </Button>
         {/* <div>{this.renderErrorMsg()}</div> */}
       </div>
-    );
-  };
-
-  render() {
-    const { prefixCls } = this.props;
-    return <div className={prefixCls}>{this.renderLoginPanel()}</div>;
-  }
-}
+    </LoginCss>
+  );
+};
 
 export default Login;

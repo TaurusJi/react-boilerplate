@@ -39,12 +39,6 @@ module.exports = override(
   ...addBabelPlugins(...babelPlugins),
   ...webpackPlugins.map(plugin => addWebpackPlugin(plugin)),
   config => {
-    config.module.rules[2].oneOf[6].use.push({
-      loader: "style-resources-loader",
-      options: {
-        patterns: ["./src/styles/variable.scss", "./src/styles/mixin.scss"]
-      }
-    });
     config = rewireReactHotLoader(config, process.env.NODE_ENV);
     return config;
   }
