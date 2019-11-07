@@ -1,7 +1,5 @@
 import React from "react";
 import { isNil } from "lodash";
-import nProgress from "nprogress";
-import "nprogress/nprogress.css";
 
 type beforeRender = (
   guard?: () => any

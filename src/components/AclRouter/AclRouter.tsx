@@ -11,7 +11,7 @@ type RCType = typeof React.Component | React.FC;
 export interface AuthorizedRoute {
   key?: string;
   path?: string;
-  text?: string;
+  name?: string;
   icon?: string;
   title?: string;
   exact?: boolean;
@@ -26,7 +26,7 @@ export interface AuthorizedRoute {
 export interface NormalRoute {
   key?: string;
   path?: string;
-  text?: string;
+  name?: string;
   icon?: string;
   title?: string;
   exact?: boolean;
