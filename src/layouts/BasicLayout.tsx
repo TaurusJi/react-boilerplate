@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import MenuSider from "../components/Sider";
 import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
@@ -10,8 +10,9 @@ import { AuthorizedRoute } from "src/components/AclRouter/AclRouter";
 import { connect } from "src/store/connect";
 import { isEmpty, get } from "lodash";
 import LoginChecker from "src/components/LoginChecker";
-import withRouteGuard from "src/components/WithRouteGuard";
 import logo from "src/assets/logo.svg";
+import nProgress from "nprogress";
+import "nprogress/nprogress.css";
 import "./BasicLayout.scss";
 
 const { Footer, Sider, Content } = Layout;
@@ -33,6 +34,19 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
     route: {}
   };
 
+  static getDerivedStateFromProps() {
+    nProgress.start();
+    return null;
+  }
+
+  componentDidMount() {
+    nProgress.done();
+  }
+
+  componentDidUpdate() {
+    nProgress.done();
+  }
+
   renderBreadcrumb = () => {
     const {
       prefixCls,
@@ -42,23 +56,14 @@ class AuthorizedLayout extends PureComponent<RouteComponentProps & IProps> {
     if (!breadcrumb) {
       return null;
     }
-    console.log(breadcrumb);
 
     const breadcrumbData = generateBreadcrumb(breadcrumb);
 
     return (
       <Breadcrumb className={`${prefixCls}-breadcrumb`}>
-        {breadcrumbData.map((item, idx) =>
-          idx === breadcrumbData.length - 1 ? (
-            <Breadcrumb.Item key={item.href}>{item.text}</Breadcrumb.Item>
-          ) : (
-            <Breadcrumb.Item key={item.href}>
-              <Link href={item.href} to={item.href}>
-                {item.text}
-              </Link>
-            </Breadcrumb.Item>
-          )
-        )}
+        {breadcrumbData.map(item => (
+          <Breadcrumb.Item key={item.href}>{item.text}</Breadcrumb.Item>
+        ))}
       </Breadcrumb>
     );
   };

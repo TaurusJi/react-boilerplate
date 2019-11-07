@@ -5,13 +5,16 @@ import {
   NormalRoute
 } from "src/components/AclRouter/AclRouter";
 
+type RouteModel = NormalRoute & AuthorizedRoute;
+type RouteModelList = Array<RouteModel>;
+
 // todo 还要做好params参数的正则校验匹配
 const filteRouteData = (
-  result: Array<NormalRoute & AuthorizedRoute>,
-  routes: Array<NormalRoute & AuthorizedRoute>,
+  result: RouteModelList,
+  routes: RouteModelList,
   path: string
 ) => {
-  const headParam = head<NormalRoute & AuthorizedRoute>(
+  const headParam = head<RouteModel>(
     routes.filter(route => {
       if (route.routes) {
         filteRouteData(result, route.routes, path);
@@ -30,7 +33,7 @@ type GenerateBreadcrumbType = (
 ) => Array<{ text: string; href: string }>;
 
 const generateBreadcrumb: GenerateBreadcrumbType = breadcrumb => {
-  const result: Array<NormalRoute & AuthorizedRoute> = [];
+  const result: RouteModelList = [];
   breadcrumb.forEach(path => {
     filteRouteData(result, combineRoutes, path);
   });

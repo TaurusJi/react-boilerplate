@@ -77,8 +77,6 @@ class AclRouter extends PureComponent<IProps> {
             ...props.location,
             state: { is404: true, component: route.component }
           }}
-          from={route.path}
-          exact={route.exact}
         />
       )}
     />
