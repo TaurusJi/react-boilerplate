@@ -5,7 +5,7 @@ export interface AppState {
 }
 
 const initialState: AppState = {
-  isLogin: false
+  isLogin: true
 };
 
 const appReducer = (state = initialState, action: Action) => {
