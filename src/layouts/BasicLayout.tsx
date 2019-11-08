@@ -1,18 +1,19 @@
-import React, { PureComponent, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
-import { RouteComponentProps } from "react-router-dom";
 import MenuSider from "../components/Sider";
 import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { matchRoutes } from "react-router-config";
 import { routes } from "src/config/routes";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
-import { connect } from "src/store/connect";
 import { isEmpty, get } from "lodash";
 import LoginChecker from "src/components/LoginChecker";
 import logo from "src/assets/logo.svg";
-import nProgress from "nprogress";
-import "nprogress/nprogress.css";
+import { useSelector } from "react-redux";
+import { State } from "src/store/reducers";
+import useReactRouter from "use-react-router";
+// import nProgress from "nprogress";
+// import "nprogress/nprogress.css";
 import {
   PageHeaderCss,
   HeaderCss,
@@ -21,9 +22,6 @@ import {
   FooterCss,
   LayoutCss
 } from "./style";
-import { useSelector } from "react-redux";
-import { State } from "src/store/reducers";
-import useReactRouter from "use-react-router";
 
 const { Sider } = Layout;
 
@@ -41,7 +39,7 @@ const useRoute = () => {
   return { route };
 };
 
-const renderBreadcrumb = () => {
+const RenderBreadcrumb = () => {
   const { route } = useRoute();
   const breadcrumbData = useMemo(() => {
     const { breadcrumb } = route;
@@ -57,7 +55,7 @@ const renderBreadcrumb = () => {
   );
 };
 
-const renderHeader = () => {
+const Header = () => {
   const userMenu = (
     <MenuCss>
       <Menu.Item disabled className="user-menu-item">
@@ -89,7 +87,7 @@ const renderHeader = () => {
   );
 };
 
-const renderPageHeader = () => {
+const PageHeader = () => {
   const { route } = useRoute();
 
   if (isEmpty(route.name)) {
@@ -98,19 +96,13 @@ const renderPageHeader = () => {
 
   return (
     <PageHeaderCss>
-      {renderBreadcrumb()}
+      <RenderBreadcrumb />
       <div className="page-title">{route.name}</div>
     </PageHeaderCss>
   );
 };
 
-const renderContent = (children: React.ReactNode) => {
-  return <ContentCss>{children}</ContentCss>;
-};
-
-const renderFooter = () => (
-  <FooterCss className="footer">Copyright © 2019</FooterCss>
-);
+const Footer = () => <FooterCss className="footer">Copyright © 2019</FooterCss>;
 
 const BasicLayout: React.FC = props => {
   const { history } = useReactRouter();
@@ -127,13 +119,13 @@ const BasicLayout: React.FC = props => {
             pathname={pathname}
             appLogo={logo}
             appName="React Boilerplate"
-          ></MenuSider>
+          />
         </Sider>
         <LayoutCss>
-          {renderHeader()}
-          {renderPageHeader()}
-          {renderContent(props.children)}
-          {renderFooter()}
+          <Header />
+          <PageHeader />
+          <ContentCss>{props.children}</ContentCss>
+          <Footer />
         </LayoutCss>
       </Layout>
     </LoginChecker>
