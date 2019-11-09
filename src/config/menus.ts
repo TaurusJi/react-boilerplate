@@ -32,7 +32,7 @@ export const menuData: IMenu[] = [
   },
   {
     name: "广告牌",
-    icon: "billboard",
+    icon: "form",
     path: "billboard",
     children: [
       {

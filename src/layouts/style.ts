@@ -11,27 +11,40 @@ export const NormalLayoutCss = styled.div`
 export const HeaderCss = styled.div`
   width: 100%;
   height: 64px;
+  padding-right: 12px;
+  display: flex;
   background: var(--grey-1);
   box-shadow: var(--shadow-1-down-light);
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 12px;
   z-index: var(--z-index-1);
 
-  .avatar-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
+  .trigger {
+    font-size: 20px;
+    line-height: 70px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
 
     &:hover {
-      cursor: pointer;
-      background: var(--blue-1);
+      color: #1890ff;
     }
   }
 
-  &-avatar {
-    background-color: var(--blue-4);
+  .right-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+
+    .avatar-container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+
+      &:hover {
+        cursor: pointer;
+        background: var(--blue-1);
+      }
+    }
   }
 `;
 
@@ -43,6 +56,34 @@ export const PageHeaderCss = styled.header`
   .page-title {
     font-size: var(--font-size-xl);
     margin-bottom: 16px;
+  }
+`;
+
+export const SiderHeaderCss = styled.div`
+  position: relative;
+  height: 64px;
+  padding-left: 24px;
+  overflow: hidden;
+  line-height: 64px;
+  background: #001529;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  .logo {
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .appName {
+    color: #ffffff;
+    font-size: 20px;
+    margin-left: 12px;
+    display: inline-block;
+    margin: 0 0 0 12px;
+    font-weight: 600;
+    vertical-align: middle;
   }
 `;
 

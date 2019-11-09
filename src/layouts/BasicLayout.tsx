@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
 import MenuSider from "../components/Sider";
 import { menuData } from "src/config/menus";
@@ -6,12 +6,13 @@ import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { matchRoutes } from "react-router-config";
 import { routes } from "src/config/routes";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
-import { isEmpty, get } from "lodash";
+import { isEmpty, get, last } from "lodash";
 import LoginChecker from "src/components/LoginChecker";
 import logo from "src/assets/logo.svg";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers";
 import useReactRouter from "use-react-router";
+import styles from "./style.module.scss";
 // import nProgress from "nprogress";
 // import "nprogress/nprogress.css";
 import {
@@ -20,8 +21,10 @@ import {
   MenuCss,
   ContentCss,
   FooterCss,
-  LayoutCss
+  LayoutCss,
+  SiderHeaderCss
 } from "./style";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -33,7 +36,7 @@ const useRoute = () => {
   const { location } = useSelector((state: State) => state.router);
   const route: RouteModel = useMemo(() => {
     const match = matchRoutes(routes, location.pathname) as RouteModel[];
-    return get(match[match.length - 1], "route", {});
+    return get(last(match), "route", {});
   }, [location.pathname]);
 
   return { route };
@@ -55,7 +58,14 @@ const RenderBreadcrumb = () => {
   );
 };
 
-const Header = () => {
+interface IRenderHeaderProps {
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+}
+
+const renderHeader = (props: IRenderHeaderProps): React.ReactNode => {
+  const { collapsed, setCollapsed } = props;
+
   const userMenu = (
     <MenuCss>
       <Menu.Item disabled className="user-menu-item">
@@ -78,11 +88,22 @@ const Header = () => {
 
   return (
     <HeaderCss>
-      <Dropdown overlay={userMenu} placement="bottomRight">
-        <div className="avatar-container">
-          <Avatar className="avatar">N</Avatar>
-        </div>
-      </Dropdown>
+      <Icon
+        className="trigger"
+        type={collapsed ? "menu-unfold" : "menu-fold"}
+        onClick={() => setCollapsed(!collapsed)}
+      />
+      <div className="right-content">
+        <Dropdown
+          overlay={userMenu}
+          placement="bottomRight"
+          className="Dropdown"
+        >
+          <div className="avatar-container">
+            <Avatar className="avatar">N</Avatar>
+          </div>
+        </Dropdown>
+      </div>
     </HeaderCss>
   );
 };
@@ -102,6 +123,21 @@ const PageHeader = () => {
   );
 };
 
+const SiderHeader = () => {
+  const appName = "React Boilerplate";
+  const appLogo = logo;
+  const appBaseUrl = "/";
+
+  return (
+    <SiderHeaderCss>
+      <Link to={appBaseUrl} href={appBaseUrl}>
+        {appLogo && <img className="logo" src={appLogo} alt="logo" />}
+        {appName && <h1 className="appName">{appName}</h1>}
+      </Link>
+    </SiderHeaderCss>
+  );
+};
+
 const Footer = () => <FooterCss className="footer">Copyright © 2019</FooterCss>;
 
 const BasicLayout: React.FC = props => {
@@ -109,20 +145,27 @@ const BasicLayout: React.FC = props => {
   const {
     location: { pathname }
   } = history;
+  const [collapsed, setCollapsed] = useState(false);
+  const headerDOM = renderHeader({
+    collapsed,
+    setCollapsed
+  });
 
   return (
     <LoginChecker>
       <Layout>
-        <Sider width={256} style={{ minHeight: "100vh" }}>
-          <MenuSider
-            menuData={menuData}
-            pathname={pathname}
-            appLogo={logo}
-            appName="React Boilerplate"
-          />
+        <Sider
+          width={256}
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          className={styles.sider}
+        >
+          <SiderHeader />
+          <MenuSider menuData={menuData} pathname={pathname} />
         </Sider>
         <LayoutCss>
-          <Header />
+          {headerDOM}
           <PageHeader />
           <ContentCss>{props.children}</ContentCss>
           <Footer />
