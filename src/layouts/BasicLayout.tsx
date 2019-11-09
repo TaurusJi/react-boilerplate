@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
-import MenuSider from "../components/Sider";
+import SiderMenu from "../components/Sider";
 import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { matchRoutes } from "react-router-config";
@@ -28,10 +28,6 @@ import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
-interface IProps {
-  route: Partial<RouteModel>;
-}
-
 const useRoute = () => {
   const { location } = useSelector((state: State) => state.router);
   const route: RouteModel = useMemo(() => {
@@ -58,12 +54,10 @@ const RenderBreadcrumb = () => {
   );
 };
 
-interface IRenderHeaderProps {
+const renderHeader = (props: {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
-}
-
-const renderHeader = (props: IRenderHeaderProps): React.ReactNode => {
+}) => {
   const { collapsed, setCollapsed } = props;
 
   const userMenu = (
@@ -123,7 +117,7 @@ const PageHeader = () => {
   );
 };
 
-const SiderHeader = () => {
+const SiderHeader: React.FC = () => {
   const appName = "React Boilerplate";
   const appLogo = logo;
   const appBaseUrl = "/";
@@ -162,7 +156,7 @@ const BasicLayout: React.FC = props => {
           className={styles.sider}
         >
           <SiderHeader />
-          <MenuSider menuData={menuData} pathname={pathname} />
+          <SiderMenu menuData={menuData} pathname={pathname} />
         </Sider>
         <LayoutCss>
           {headerDOM}
@@ -176,6 +170,10 @@ const BasicLayout: React.FC = props => {
 };
 
 export default BasicLayout;
+
+// interface IProps {
+//   route: Partial<RouteModel>;
+// }
 
 // @connect<{}, RouteComponentProps & IProps>(state => {
 //   const pathname = state.router.location.pathname;
