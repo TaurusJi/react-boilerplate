@@ -11,8 +11,8 @@ import LoginChecker from "src/components/LoginChecker";
 import logo from "src/assets/logo.svg";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers";
-import useReactRouter from "use-react-router";
 import styles from "./style.module.scss";
+import { Link, useLocation } from "react-router-dom";
 // import nProgress from "nprogress";
 // import "nprogress/nprogress.css";
 import {
@@ -24,7 +24,6 @@ import {
   LayoutCss,
   SiderHeaderCss
 } from "./style";
-import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -139,10 +138,7 @@ const SiderHeader: React.FC = () => {
 const Footer = () => <FooterCss className="footer">Copyright © 2019</FooterCss>;
 
 const BasicLayout: React.FC = props => {
-  const { history } = useReactRouter();
-  const {
-    location: { pathname }
-  } = history;
+  const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const headerDOM = renderHeader({
     collapsed,

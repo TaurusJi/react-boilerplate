@@ -4,9 +4,9 @@ import { Input, Icon, Button } from "antd";
 // import { userLogin } from "src/store/actions/app";
 import { stringify } from "querystring";
 import logo from "src/assets/logo.svg";
-import useReactRouter from "use-react-router";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers";
+import { useHistory } from "react-router";
 import LoginCss from "./style";
 
 const Login: React.FC = () => {
@@ -14,7 +14,7 @@ const Login: React.FC = () => {
     username: "",
     password: ""
   });
-  const { history } = useReactRouter();
+  const history = useHistory();
   const { isLogin } = useSelector((state: State) => state.app);
 
   useEffect(() => {

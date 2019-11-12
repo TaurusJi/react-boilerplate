@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers/index";
-import useReactRouter from "use-react-router";
+import { useHistory } from "react-router";
 import { NormalLayoutCss } from "./style";
 
 const NormalLayout: React.FC = props => {
   const { isLogin } = useSelector((state: State) => state.app);
-  const { history } = useReactRouter();
+  const history = useHistory();
 
   // 登录后访问非权限路由 重定向至dashboard/user
   useEffect(() => {
