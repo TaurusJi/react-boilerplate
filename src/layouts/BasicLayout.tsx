@@ -30,9 +30,13 @@ const { Sider } = Layout;
 
 const useRoute = () => {
   const { location } = useSelector((state: State) => state.router);
-  const route: RouteModel = useMemo(() => {
-    const match = matchRoutes(routes, location.pathname) as RouteModel[];
-    return get(last(match), "route", {});
+  const route = useMemo(() => {
+    const match = matchRoutes(routes, location.pathname) as Array<{
+      route: RouteModel;
+      match: any;
+    }>;
+
+    return get(last(match), "route", {}) as RouteModel;
   }, [location.pathname]);
 
   return { route };
