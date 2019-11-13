@@ -11,5 +11,6 @@ export const useOnUpdate = (fn: () => void, dep?: any[]) => {
     } else {
       ref.current.fn();
     }
+    // eslint-disable-next-line
   }, dep);
 };
