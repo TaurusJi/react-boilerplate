@@ -18,7 +18,8 @@ export interface RouteModel {
   routes?: RouteModel[];
   redirect?: string;
   component?: RCType;
-  breadcrumb?: string[];
+  hideInMenu?: boolean;
+  hideChildrenInMenu?: boolean;
   permissions?: string[];
   unauthorized?: RCType;
 }

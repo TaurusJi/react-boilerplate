@@ -2,7 +2,6 @@ import head from "lodash/head";
 import { routes } from "src/config/routes";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
 
-// todo 还要做好params参数的正则校验匹配
 const filteRouteData = (
   result: RouteModel[],
   routes: RouteModel[],
@@ -24,19 +23,17 @@ const filteRouteData = (
 
 type GenerateBreadcrumbType = (
   Breadcrumb: string[]
-) => Array<{ text: string; href: string }>;
+) => Array<{ name: string; href: string }>;
 
 const generateBreadcrumb: GenerateBreadcrumbType = breadcrumb => {
   const result: RouteModel[] = [];
   breadcrumb.forEach(path => {
     filteRouteData(result, routes, path);
   });
-  return result.map(route => {
-    return {
-      text: (route && route.name) || "",
-      href: route.path!
-    };
-  });
+  return result.map(route => ({
+    name: (route && route.name) || "",
+    href: route.path!
+  }));
 };
 
 export default generateBreadcrumb;

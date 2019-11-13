@@ -34,13 +34,11 @@ export const routes: RouteModel[] = [
     component: AuthorizedLayout,
     permissions: ["admin"],
     name: "首页",
-    breadcrumb: ["/"],
     unauthorized: Unauthorized,
     routes: [
       {
         path: "/dashboard",
         permissions: ["admin"],
-        breadcrumb: ["/", "/dashboard"],
         name: "仪表盘",
         unauthorized: Unauthorized,
         routes: [
@@ -49,7 +47,6 @@ export const routes: RouteModel[] = [
             component: User,
             exact: true,
             permissions: ["admin"],
-            breadcrumb: ["/", "/dashboard", "/dashboard/user"],
             name: "用户",
             unauthorized: Unauthorized
           },
@@ -58,7 +55,6 @@ export const routes: RouteModel[] = [
             component: Form,
             exact: true,
             permissions: ["user"],
-            breadcrumb: ["/", "/dashboard", "/dashboard/form"],
             name: "表单",
             unauthorized: Unauthorized
           },
@@ -70,7 +66,6 @@ export const routes: RouteModel[] = [
       {
         path: "/billboard",
         permissions: ["admin"],
-        breadcrumb: ["/", "/billboard"],
         name: "排行榜",
         unauthorized: Unauthorized,
         routes: [
@@ -79,7 +74,6 @@ export const routes: RouteModel[] = [
             component: User,
             exact: true,
             permissions: ["user"],
-            breadcrumb: ["/", "/billboard", "/billboard/user"],
             name: "用户",
             unauthorized: Unauthorized
           },
@@ -88,7 +82,6 @@ export const routes: RouteModel[] = [
             component: Form,
             exact: true,
             permissions: ["admin"],
-            breadcrumb: ["/", "/billboard", "/billboard/form"],
             name: "表单",
             unauthorized: Unauthorized
           },

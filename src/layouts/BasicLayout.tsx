@@ -1,20 +1,20 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
 import SiderMenu from "../components/Sider";
 import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
-import { matchRoutes } from "react-router-config";
-import { routes } from "src/config/routes";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
-import { isEmpty, get, last } from "lodash";
+import { isEmpty } from "lodash";
 import LoginChecker from "src/components/LoginChecker";
-import logo from "src/assets/logo.svg";
-import { useSelector } from "react-redux";
-import { State } from "src/store/reducers";
-import styles from "./style.module.scss";
+import { Helmet } from "react-helmet";
 import { Link, useLocation } from "react-router-dom";
-// import nProgress from "nprogress";
-// import "nprogress/nprogress.css";
+import { useRoute } from "src/utils/getCurrentRoute";
+import { getPageTitle } from "src/utils/getPageTitle";
+import urlToList from "src/components/Sider/utils/urlToList";
+import { useOnUpdate } from "src/utils/hooks/useOnUpdate";
+import { useOnMount } from "src/utils/hooks/useOnMount";
+import logo from "src/assets/logo.svg";
+import styles from "./style.module.scss";
 import {
   PageHeaderCss,
   HeaderCss,
@@ -24,34 +24,22 @@ import {
   LayoutCss,
   SiderHeaderCss
 } from "./style";
+import nProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 const { Sider } = Layout;
 
-const useRoute = () => {
-  const { location } = useSelector((state: State) => state.router);
-  const route = useMemo(() => {
-    const match = matchRoutes(routes, location.pathname) as Array<{
-      route: RouteModel;
-      match: any;
-    }>;
-
-    return get(last(match), "route", {}) as RouteModel;
-  }, [location.pathname]);
-
-  return { route };
-};
-
-const RenderBreadcrumb = () => {
-  const { route } = useRoute();
+const BreadcrumbList = () => {
+  const location = useLocation();
   const breadcrumbData = useMemo(() => {
-    const { breadcrumb } = route;
+    const breadcrumb = ["/"].concat(urlToList(location.pathname));
     return breadcrumb ? generateBreadcrumb(breadcrumb) : [];
-  }, [route]);
+  }, [location]);
 
   return (
     <Breadcrumb style={{ marginBottom: "16px" }}>
       {breadcrumbData.map(item => (
-        <Breadcrumb.Item key={item.href}>{item.text}</Breadcrumb.Item>
+        <Breadcrumb.Item key={item.href}>{item.name}</Breadcrumb.Item>
       ))}
     </Breadcrumb>
   );
@@ -105,16 +93,14 @@ const renderHeader = (props: {
   );
 };
 
-const PageHeader = () => {
-  const { route } = useRoute();
-
+const renderPageHeader = (route: RouteModel) => {
   if (isEmpty(route.name)) {
     return null;
   }
 
   return (
     <PageHeaderCss>
-      <RenderBreadcrumb />
+      <BreadcrumbList />
       <div className="page-title">{route.name}</div>
     </PageHeaderCss>
   );
@@ -138,15 +124,33 @@ const SiderHeader: React.FC = () => {
 const Footer = () => <FooterCss className="footer">Copyright © 2019</FooterCss>;
 
 const BasicLayout: React.FC = props => {
+  const { route } = useRoute();
   const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const headerDOM = renderHeader({
     collapsed,
     setCollapsed
   });
+  const pageHeaderDOM = renderPageHeader(route);
+  const pageTitle = getPageTitle(route);
+
+  useEffect(() => {
+    nProgress.start();
+  }, [pathname]);
+
+  useOnMount(() => {
+    nProgress.done();
+  });
+
+  useOnUpdate(() => {
+    nProgress.done();
+  });
 
   return (
     <LoginChecker>
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
       <Layout>
         <Sider
           width={256}
@@ -160,7 +164,7 @@ const BasicLayout: React.FC = props => {
         </Sider>
         <LayoutCss>
           {headerDOM}
-          <PageHeader />
+          {pageHeaderDOM}
           <ContentCss>{props.children}</ContentCss>
           <Footer />
         </LayoutCss>
