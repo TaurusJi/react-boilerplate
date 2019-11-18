@@ -40,6 +40,7 @@ export const routes: RouteModel[] = [
         path: "/dashboard",
         permissions: ["admin"],
         name: "仪表盘",
+        icon: "dashboard",
         unauthorized: Unauthorized,
         routes: [
           {
@@ -67,6 +68,7 @@ export const routes: RouteModel[] = [
         path: "/billboard",
         permissions: ["admin"],
         name: "排行榜",
+        icon: "dashboard",
         unauthorized: Unauthorized,
         routes: [
           {

@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { routes } from "src/config/routes";
 import { Menu, Icon } from "antd";
 import formatMenuPath from "./utils/formatMenuPath";
 import getFlatMenuKeys from "./utils/getFlatMenuKeys";
 import getMeunMatchKeys from "./utils/getMeunMatchKeys";
 import urlToList from "./utils/urlToList";
+import { defaultFilterMenuData } from "src/utils/getMenuData";
 
 const { SubMenu } = Menu;
 
@@ -17,14 +19,21 @@ export interface IMenu {
 
 interface IProps {
   menuData: IMenu[];
-  pathname: string;
 }
 
 const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
-  const { pathname, menuData } = props;
+  const { pathname } = useLocation();
+  const { menuData } = props;
 
   const fullPathMenuData: IMenu[] = useMemo(() => {
-    return formatMenuPath(menuData);
+    if (menuData.length) {
+      return formatMenuPath(menuData);
+    } else {
+      const filterRootRoute = routes.find(route => route.path === "/");
+      return defaultFilterMenuData(
+        filterRootRoute ? filterRootRoute.routes : []
+      );
+    }
   }, [menuData]);
 
   const selectedKeys: string[] = useMemo(() => {
@@ -79,8 +88,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
 };
 
 Sider.defaultProps = {
-  menuData: [],
-  pathname: "/"
+  menuData: []
 };
 
 export default Sider;

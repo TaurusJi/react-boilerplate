@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
 import SiderMenu from "../components/Sider";
-import { menuData } from "src/config/menus";
+// import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
 import { isEmpty } from "lodash";
@@ -160,7 +160,7 @@ const BasicLayout: React.FC = props => {
           className={styles.sider}
         >
           <SiderHeader />
-          <SiderMenu menuData={menuData} pathname={pathname} />
+          <SiderMenu />
         </Sider>
         <LayoutCss>
           {headerDOM}

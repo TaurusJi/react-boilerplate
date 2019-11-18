@@ -1,9 +1,7 @@
-const getFlatMenuKeys: <
-  T extends {
-    path: string;
-    children?: Array<T>;
-  }
->(
+const getFlatMenuKeys: <T extends {
+  path: string;
+  children?: Array<T>;
+}>(
   menuData: Array<T>
 ) => string[] = menuData => {
   return menuData.reduce((keys: string[], item) => {
