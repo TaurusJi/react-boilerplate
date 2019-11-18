@@ -1,9 +1,9 @@
 import React from "react";
 import { isNil } from "lodash";
 
-type beforeRender = (
-  guard?: () => any
-) => (Component: typeof React.Component) => any;
+type beforeRender<T = typeof React.Component> = (
+  guard?: Function
+) => (Component: T) => T;
 
 export interface IState {
   isWaiting: boolean;
