@@ -1,4 +1,4 @@
-import pathToRegexp from "path-to-regexp";
+import { pathToRegexp } from "path-to-regexp";
 
 const getMeunMatchKeys = (flatMenuKeys: string[], paths: string[]) => {
   return paths.reduce(
