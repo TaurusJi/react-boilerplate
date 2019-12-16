@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers/index";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const LoginChecker: React.FC = props => {
   const { isLogin } = useSelector((state: State) => state.app);

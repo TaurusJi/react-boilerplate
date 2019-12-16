@@ -6,7 +6,7 @@ import { stringify } from "querystring";
 import logo from "src/assets/logo.svg";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import LoginCss from "./style";
 
 const Login: React.FC = () => {

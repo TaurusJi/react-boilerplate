@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { State } from "src/store/reducers/index";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { NormalLayoutCss } from "./style";
 import { Helmet } from "react-helmet";
 import { getPageTitle } from "src/utils/getPageTitle";
