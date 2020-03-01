@@ -1,5 +1,12 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { Layout, Breadcrumb, Icon, Dropdown, Avatar, Menu } from "antd";
+import { Layout, Breadcrumb, Dropdown, Avatar, Menu } from "antd";
+import {
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
+} from "@ant-design/icons";
 import SiderMenu from "../components/Sider";
 // import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
@@ -54,17 +61,17 @@ const renderHeader = (props: {
   const userMenu = (
     <MenuCss>
       <Menu.Item disabled className="user-menu-item">
-        <Icon type="user" className="user-menu-icon" />
+        <UserOutlined className="user-menu-icon" />
         <span>个人中心</span>
       </Menu.Item>
       <Menu.Item disabled className="user-menu-item">
-        <Icon type="setting" className="user-menu-icon" />
+        <SettingOutlined className="user-menu-icon" />
         <span>设置</span>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item className="user-menu-item">
         <div role="presentation">
-          <Icon type="logout" className="user-menu-icon" />
+          <LogoutOutlined className="user-menu-icon" />
           <span>退出登陆</span>
         </div>
       </Menu.Item>
@@ -73,11 +80,18 @@ const renderHeader = (props: {
 
   return (
     <HeaderCss>
-      <Icon
-        className="trigger"
-        type={collapsed ? "menu-unfold" : "menu-fold"}
-        onClick={() => setCollapsed(!collapsed)}
-      />
+      {collapsed ? (
+        <MenuUnfoldOutlined
+          className="trigger"
+          onClick={() => setCollapsed(!collapsed)}
+        ></MenuUnfoldOutlined>
+      ) : (
+        <MenuFoldOutlined
+          className="trigger"
+          onClick={() => setCollapsed(!collapsed)}
+        ></MenuFoldOutlined>
+      )}
+
       <div className="right-content">
         <Dropdown
           overlay={userMenu}

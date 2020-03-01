@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { routes } from "src/config/routes";
-import { Menu, Icon } from "antd";
+import { Menu } from "antd";
+import icons from "src/config/icons";
 import formatMenuPath from "./utils/formatMenuPath";
 import getFlatMenuKeys from "./utils/getFlatMenuKeys";
 import getMeunMatchKeys from "./utils/getMeunMatchKeys";
@@ -53,7 +54,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
             key={item.path}
             title={
               <span>
-                {item.icon && <Icon type={item.icon} />}
+                {item.icon && icons.get(item.icon)}
                 <span>{item.name}</span>
               </span>
             }
@@ -66,7 +67,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
       return (
         <Menu.Item key={item.path}>
           <Link to={item.path} href={item.path}>
-            {item.icon && <Icon type={item.icon} />}
+            {item.icon && icons.get(item.icon)}
             <span>{item.name}</span>
           </Link>
         </Menu.Item>

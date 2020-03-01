@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 // import { isEmpty } from "lodash";
-import { Input, Icon, Button } from "antd";
+import { Input, Button } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 // import { userLogin } from "src/store/actions/app";
 import { stringify } from "querystring";
 import logo from "src/assets/logo.svg";
@@ -65,7 +66,7 @@ const Login: React.FC = () => {
           style={{ height: 40, marginBottom: 24 }}
           placeholder="请输入用户名"
           type="text"
-          prefix={<Icon type="user" style={{ color: "rgba(0, 0, 0, .25)" }} />}
+          prefix={<UserOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
           value={state.username}
           onChange={e => onInputChange(e, "username")}
           // onPressEnter={this.handleLogin}
@@ -74,7 +75,7 @@ const Login: React.FC = () => {
           className="login-input"
           placeholder="请输入密码"
           type="password"
-          prefix={<Icon type="lock" style={{ color: "rgba(0, 0, 0, .25)" }} />}
+          prefix={<LockOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
           value={state.password}
           onChange={e => onInputChange(e, "password")}
           // onPressEnter={this.handleLogin}
