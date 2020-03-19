@@ -1,6 +1,8 @@
 // polyfill
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
+// logger
+import "src/utils/logger";
 
 import React from "react";
 import ReactDOM from "react-dom";
