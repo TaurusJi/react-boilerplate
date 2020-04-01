@@ -16,7 +16,7 @@ const User: React.FC = () => {
       <p className="prevIndex">上一个index是: {ref.current}</p>
       <Button
         style={{ marginLeft: 0 }}
-        onClick={() => setIndex(prev => prev + 1)}
+        onClick={() => setIndex((prev) => prev + 1)}
       >
         点击让index加1
       </Button>

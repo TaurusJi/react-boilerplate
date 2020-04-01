@@ -10,13 +10,13 @@ interface IProps {
   children(props: InjectChildrenProps): JSX.Element;
 }
 
-const UserInfo: React.FC<IProps> = props => {
+const UserInfo: React.FC<IProps> = (props) => {
   return (
     <div>
       <p>{props.count}</p>
       {props.children({
         name: "Jicy",
-        age: 23
+        age: 23,
       })}
     </div>
   );
