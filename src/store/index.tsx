@@ -2,12 +2,11 @@ import { routerMiddleware } from "connected-react-router";
 import { createStore, applyMiddleware, compose } from "redux";
 import { createHashHistory } from "history";
 import createRootReducer from "./reducers";
-import thunk from "redux-thunk";
 
 // export const history = createBrowserHistory();
 export const history = createHashHistory();
 
-const middlewares = [routerMiddleware(history), thunk];
+const middlewares = [routerMiddleware(history)];
 
 if (process.env.NODE_ENV === `development`) {
   // eslint-disable-next-line

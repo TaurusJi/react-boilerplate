@@ -2,7 +2,7 @@ import head from "lodash/head";
 import { routes } from "src/config/routes";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
 
-const filteRouteData = (
+const filterRouteData = (
   result: RouteModel[],
   routes: RouteModel[],
   path: string
@@ -10,7 +10,7 @@ const filteRouteData = (
   const headParam = head<RouteModel>(
     routes.filter(route => {
       if (route.routes) {
-        filteRouteData(result, route.routes, path);
+        filterRouteData(result, route.routes, path);
       }
       return route.path === path;
     })
@@ -28,7 +28,7 @@ type GenerateBreadcrumbType = (
 const generateBreadcrumb: GenerateBreadcrumbType = breadcrumb => {
   const result: RouteModel[] = [];
   breadcrumb.forEach(path => {
-    filteRouteData(result, routes, path);
+    filterRouteData(result, routes, path);
   });
   return result.map(route => ({
     name: (route && route.name) || "",
