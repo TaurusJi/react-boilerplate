@@ -14,16 +14,16 @@ export interface IState {
  * @param {Function} guard
  * @returns 包装后的Component
  */
-const beforeRender: beforeRender = guard => Component => {
+const beforeRender: beforeRender = (guard) => (Component) => {
   return class RouteGuard extends Component<{}, IState> {
     state = {
-      isWaiting: true
+      isWaiting: true,
     };
 
     componentDidMount() {
       if (isNil(guard)) {
         this.setState({
-          isWaiting: false
+          isWaiting: false,
         });
       }
 

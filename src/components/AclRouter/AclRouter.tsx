@@ -36,7 +36,7 @@ class AclRouter extends PureComponent<IProps> {
     normalLayout: DefaultLayout,
     authorizedRoutes: [],
     authorizedLayout: DefaultLayout,
-    notFound: DefaultNotFound
+    notFound: DefaultNotFound,
   };
 
   renderRedirectRoute = (route: RouteModel) => (
@@ -55,11 +55,11 @@ class AclRouter extends PureComponent<IProps> {
     <Route
       key="notfound"
       {...omitRouteRenderProperties<RouteModel>(route)}
-      render={props => (
+      render={(props) => (
         <Redirect
           to={{
             ...props.location,
-            state: { is404: true, component: route.component }
+            state: { is404: true, component: route.component },
           }}
         />
       )}
@@ -68,7 +68,7 @@ class AclRouter extends PureComponent<IProps> {
 
   renderRoutes = (routes: RouteModel[], extraProps = {}, switchProps = {}) => (
     <Switch {...switchProps}>
-      {routes.map(route => {
+      {routes.map((route) => {
         const { authorities } = this.props;
         const {
           permissions,
@@ -76,7 +76,7 @@ class AclRouter extends PureComponent<IProps> {
           key,
           redirect,
           component: RouteComponent,
-          unauthorized: Unauthorized
+          unauthorized: Unauthorized,
         } = route;
         const hasPermission = checkPermissions(authorities, permissions);
 
@@ -95,7 +95,7 @@ class AclRouter extends PureComponent<IProps> {
             <Route
               key={path || key}
               {...omitRouteRenderProperties(route)}
-              render={props => <Unauthorized {...props} />}
+              render={(props) => <Unauthorized {...props} />}
             />
           );
         }
@@ -104,12 +104,12 @@ class AclRouter extends PureComponent<IProps> {
           <Route
             key={path || key}
             {...omitRouteRenderProperties(route)}
-            render={props => {
+            render={(props) => {
               const childRoutes = this.renderRoutes(
                 route.routes || [],
                 {},
                 {
-                  location: props.location
+                  location: props.location,
                 }
               );
               if (RouteComponent) {
@@ -132,7 +132,7 @@ class AclRouter extends PureComponent<IProps> {
     const { routes, notFound: NotFound } = this.props;
     return (
       <Route
-        render={props => {
+        render={(props) => {
           const { state } = props.location;
           // 参考：https://blog.csdn.net/grepets/article/details/96393575
           return state && state.is404 ? (
