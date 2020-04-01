@@ -12,7 +12,7 @@ export const routes: RouteModel[] = [
   {
     path: "/faq",
     component: FAQ,
-    name: "FAQ"
+    name: "FAQ",
   },
   {
     path: "/user",
@@ -22,12 +22,12 @@ export const routes: RouteModel[] = [
       {
         path: "/user/login",
         component: Login,
-        name: "登录"
+        name: "登录",
       },
       {
-        component: NotFound
-      }
-    ]
+        component: NotFound,
+      },
+    ],
   },
   {
     path: "/",
@@ -49,7 +49,7 @@ export const routes: RouteModel[] = [
             exact: true,
             permissions: ["admin"],
             name: "用户",
-            unauthorized: Unauthorized
+            unauthorized: Unauthorized,
           },
           {
             path: "/dashboard/form",
@@ -57,12 +57,16 @@ export const routes: RouteModel[] = [
             exact: true,
             permissions: ["user"],
             name: "表单",
-            unauthorized: Unauthorized
+            unauthorized: Unauthorized,
           },
           {
-            component: NotFound
-          }
-        ]
+            path: "/dashboard",
+            redirect: "/dashboard/user",
+          },
+          {
+            component: NotFound,
+          },
+        ],
       },
       {
         path: "/billboard",
@@ -77,7 +81,7 @@ export const routes: RouteModel[] = [
             exact: true,
             permissions: ["user"],
             name: "用户",
-            unauthorized: Unauthorized
+            unauthorized: Unauthorized,
           },
           {
             path: "/billboard/form",
@@ -85,13 +89,17 @@ export const routes: RouteModel[] = [
             exact: true,
             permissions: ["admin"],
             name: "表单",
-            unauthorized: Unauthorized
+            unauthorized: Unauthorized,
           },
           {
-            component: NotFound
-          }
-        ]
-      }
-    ]
-  }
+            path: "/billboard",
+            redirect: "/billboard/user",
+          },
+          {
+            component: NotFound,
+          },
+        ],
+      },
+    ],
+  },
 ];

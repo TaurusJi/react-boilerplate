@@ -5,7 +5,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
 } from "@ant-design/icons";
 import SiderMenu from "../components/Sider";
 // import { menuData } from "src/config/menus";
@@ -29,7 +29,7 @@ import {
   ContentCss,
   FooterCss,
   LayoutCss,
-  SiderHeaderCss
+  SiderHeaderCss,
 } from "./style";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -45,7 +45,7 @@ const BreadcrumbList = () => {
 
   return (
     <Breadcrumb style={{ marginBottom: "16px" }}>
-      {breadcrumbData.map(item => (
+      {breadcrumbData.map((item) => (
         <Breadcrumb.Item key={item.href}>{item.name}</Breadcrumb.Item>
       ))}
     </Breadcrumb>
@@ -137,13 +137,13 @@ const SiderHeader: React.FC = () => {
 
 const Footer = () => <FooterCss className="footer">Copyright © 2019</FooterCss>;
 
-const BasicLayout: React.FC = props => {
+const BasicLayout: React.FC = (props) => {
   const { route } = useRoute();
   const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const headerDOM = renderHeader({
     collapsed,
-    setCollapsed
+    setCollapsed,
   });
   const pageHeaderDOM = renderPageHeader(route);
   const pageTitle = getPageTitle(route);

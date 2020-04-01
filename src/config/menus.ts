@@ -8,11 +8,11 @@ export const menuData: IMenu[] = [
     children: [
       {
         name: "用户",
-        path: "user"
+        path: "user",
       },
       {
         name: "表单",
-        path: "form"
+        path: "form",
       },
       {
         name: "分析页",
@@ -20,15 +20,15 @@ export const menuData: IMenu[] = [
         children: [
           {
             name: "实时数据",
-            path: "realtime"
+            path: "realtime",
           },
           {
             name: "离线数据",
-            path: "offline"
-          }
-        ]
-      }
-    ]
+            path: "offline",
+          },
+        ],
+      },
+    ],
   },
   {
     name: "广告牌",
@@ -37,12 +37,12 @@ export const menuData: IMenu[] = [
     children: [
       {
         name: "用户",
-        path: "user"
+        path: "user",
       },
       {
         name: "表单",
-        path: "form"
-      }
-    ]
-  }
+        path: "form",
+      },
+    ],
+  },
 ];
