@@ -5,7 +5,7 @@ import { Menu } from "antd";
 import icons from "src/config/icons";
 import formatMenuPath from "./utils/formatMenuPath";
 import getFlatMenuKeys from "./utils/getFlatMenuKeys";
-import getMeunMatchKeys from "./utils/getMeunMatchKeys";
+import getMenuMatchKeys from "./utils/getMenuMatchKeys";
 import urlToList from "./utils/urlToList";
 import { defaultFilterMenuData } from "src/utils/getMenuData";
 
@@ -22,7 +22,7 @@ interface IProps {
   menuData: IMenu[];
 }
 
-const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
+const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
   const { pathname } = useLocation();
   const { menuData } = props;
 
@@ -30,7 +30,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
     if (menuData.length) {
       return formatMenuPath(menuData);
     } else {
-      const filterRootRoute = routes.find(route => route.path === "/");
+      const filterRootRoute = routes.find((route) => route.path === "/");
       return defaultFilterMenuData(
         filterRootRoute ? filterRootRoute.routes : []
       );
@@ -38,7 +38,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
   }, [menuData]);
 
   const selectedKeys: string[] = useMemo(() => {
-    return getMeunMatchKeys(
+    return getMenuMatchKeys(
       getFlatMenuKeys(fullPathMenuData),
       urlToList(pathname)
     );
@@ -47,7 +47,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
   const [openKeys, setOpenKeys] = useState(selectedKeys);
 
   const renderMenu = (data: IMenu[]) =>
-    data.map(item => {
+    data.map((item) => {
       if (item.children) {
         return (
           <SubMenu
@@ -89,7 +89,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = props => {
 };
 
 Sider.defaultProps = {
-  menuData: []
+  menuData: [],
 };
 
 export default Sider;

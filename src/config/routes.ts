@@ -100,6 +100,13 @@ export const routes: RouteModel[] = [
           },
         ],
       },
+      {
+        path: "",
+        redirect: "/dashboard",
+      },
+      {
+        component: NotFound,
+      },
     ],
   },
 ];

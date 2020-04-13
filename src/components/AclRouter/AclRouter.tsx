@@ -42,7 +42,7 @@ class AclRouter extends PureComponent<IProps> {
   renderRedirectRoute = (route: RouteModel) => (
     <Route
       key={route.path}
-      {...omitRouteRenderProperties<RouteModel>(route)}
+      {...omitRouteRenderProperties(route)}
       render={() =>
         route.redirect && (
           <Redirect to={route.redirect} from={route.path} exact={route.exact} />
@@ -54,7 +54,7 @@ class AclRouter extends PureComponent<IProps> {
   renderNotFoundRoute = (route: RouteModel) => (
     <Route
       key="notfound"
-      {...omitRouteRenderProperties<RouteModel>(route)}
+      {...omitRouteRenderProperties(route)}
       render={(props) => (
         <Redirect
           to={{

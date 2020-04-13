@@ -8,7 +8,6 @@ import {
   MenuFoldOutlined,
 } from "@ant-design/icons";
 import SiderMenu from "../components/Sider";
-// import { menuData } from "src/config/menus";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
 import { isEmpty } from "lodash";

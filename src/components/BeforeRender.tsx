@@ -1,7 +1,7 @@
 import React from "react";
 import { isNil } from "lodash";
 
-type beforeRender<T = typeof React.Component> = (
+export type beforeRender<T = typeof React.Component> = (
   guard?: Function
 ) => (Component: T) => T;
 
