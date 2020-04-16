@@ -2,7 +2,6 @@
 /// <reference types="node" />
 /// <reference types="react-dom" />
 
-import exp from "constants";
 import { LoggerSignature } from "./utils/logger";
 
 declare namespace NodeJS {

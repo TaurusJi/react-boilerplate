@@ -3,7 +3,7 @@ import { isEmpty, isArray, isString, isFunction, indexOf } from "lodash";
 const checkPermissions = <T>(
   authorities: T,
   permissions?: string[]
-): boolean => {
+): boolean | Error => {
   if (isEmpty(permissions)) {
     return true;
   }
@@ -18,14 +18,14 @@ const checkPermissions = <T>(
   }
 
   if (isString(authorities)) {
-    return indexOf(permissions, authorities) !== -1;
+    return indexOf(permissions!, authorities) !== -1;
   }
 
   if (isFunction(authorities)) {
     return authorities(permissions);
   }
 
-  throw new Error("[react-acl-router]: Unsupport type of authorities.");
+  throw new Error("[acl-router]: Unsupport type of authorities.");
 };
 
 export default checkPermissions;

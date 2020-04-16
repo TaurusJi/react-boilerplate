@@ -22,20 +22,20 @@ const styleSheet: IStyleSheet = {
     emoji: "🌟🌟",
     banner: "<=== 💅数据展示🌝 ===>",
     bannerStyle:
-      "color: #ffffff; font-weight: bold; background-color: #36b07a; border-radius: 2px; padding: 4px 10px;"
+      "color: #ffffff; font-weight: bold; background-color: #36b07a; border-radius: 2px; padding: 4px 10px;",
   },
   warn: {
     emoji: "😯😯",
     banner: "<=== 🔥警告展示⚡ ===>",
     bannerStyle:
-      "color: #ffffff; font-weight: bold; background-color: #f8b33f; border-radius: 2px; padding: 4px 10px;"
+      "color: #ffffff; font-weight: bold; background-color: #f8b33f; border-radius: 2px; padding: 4px 10px;",
   },
   error: {
     emoji: "😱😱",
     banner: "<=== 💣错误展示👻 ===>",
     bannerStyle:
-      "color: #ffffff; font-weight: bold; background-color: #ffeeee; border-radius: 2px; padding: 4px 10px;"
-  }
+      "color: #ffffff; font-weight: bold; background-color: #ffeeee; border-radius: 2px; padding: 4px 10px;",
+  },
 };
 
 const outputRules: IOutputRules = {
@@ -45,7 +45,7 @@ const outputRules: IOutputRules = {
     console.log("data：", log.data);
     console.log("服务状态码：", log.data.code);
     console.log("接口数据：", log.data.data);
-  }
+  },
 };
 
 class Logger {

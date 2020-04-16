@@ -1,22 +1,21 @@
 import { RouteModel } from "src/components/AclRouter/AclRouter";
 import { IMenu } from "src/components/Sider";
 
-type FilterComplianceMenuData = Array<
-  RouteModel & Required<Pick<RouteModel, "name" | "path">>
->;
+type FilterComplianceMenuData = (RouteModel &
+  Required<Pick<RouteModel, "name" | "path" | "hideInMenu">>)[];
 
 export const defaultFilterMenuData = (menuData: RouteModel[] = []): IMenu[] => {
   // 筛掉 path和name为nil 且 hideInMenu为true的路由
   const filterComplianceMenuData = menuData.filter(
-    item => item && !item.hideInMenu && item.path && item.name
+    (item) => item && !item.hideInMenu && item.path && item.name
   ) as FilterComplianceMenuData;
 
-  return filterComplianceMenuData.map(item => {
+  return filterComplianceMenuData.map((item) => {
     if (
       item.routes &&
       Array.isArray(item.routes) &&
       !item.hideChildrenInMenu &&
-      item.routes.some(child => child && !!child.name)
+      item.routes.some((child) => child && !!child.name)
     ) {
       const routes = defaultFilterMenuData(item.routes);
       if (routes.length) {
@@ -24,15 +23,16 @@ export const defaultFilterMenuData = (menuData: RouteModel[] = []): IMenu[] => {
           name: item.name,
           path: item.path,
           icon: item.icon,
-          children: routes
+          children: routes,
         };
       }
     }
+
     return {
       name: item.name,
       path: item.path,
       icon: item.icon,
-      children: undefined
+      children: undefined,
     };
   });
 };

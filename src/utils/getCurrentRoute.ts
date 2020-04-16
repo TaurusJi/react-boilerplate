@@ -9,12 +9,12 @@ import { get, last } from "lodash";
 export const useRoute = () => {
   const { location } = useSelector((state: State) => state.router);
   const route = useMemo(() => {
-    const match = matchRoutes(routes, location.pathname) as Array<{
+    const match = matchRoutes(routes, location.pathname) as {
       route: RouteModel;
       match: any;
-    }>;
+    }[];
 
-    return get(last(match), "route", {}) as RouteModel;
+    return get(last(match), "route", {});
   }, [location.pathname]);
 
   return { route };

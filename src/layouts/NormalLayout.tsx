@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 import { getPageTitle } from "src/utils/getPageTitle";
 import { useRoute } from "src/utils/getCurrentRoute";
 
-const NormalLayout: React.FC = props => {
+const NormalLayout: React.FC = (props) => {
   const { isLogin } = useSelector((state: State) => state.app);
   const { route } = useRoute();
   const history = useHistory();
