@@ -1,15 +1,22 @@
 import { get } from "lodash";
 import is from "./is";
 
-export type StyleKeys = "info" | "warn" | "error";
+enum logLevel {
+  info = "info",
+  warn = "warn",
+  error = "error",
+}
+
 export type Style = {
   emoji: string;
   banner: string;
   bannerStyle: string;
 };
+
 export type IStyleSheet = {
-  [key in StyleKeys]: Style;
+  [key in logLevel]: Style;
 };
+
 export type LoggerArgs = [any, string?, string?];
 export type LoggerSignature = (...args: LoggerArgs) => Logger;
 
@@ -49,11 +56,11 @@ const outputRules: IOutputRules = {
 };
 
 class Logger {
-  log: string;
-  style?: Style;
-  banner?: string;
-  getRule?: string;
-  outputRule?: keyof IOutputRules;
+  private log: string;
+  private style?: Style;
+  private banner?: string;
+  private getRule?: string;
+  private outputRule?: keyof IOutputRules;
 
   constructor([log, banner, getRule]: LoggerArgs) {
     this.log = log;
@@ -61,7 +68,22 @@ class Logger {
     this.getRule = getRule;
   }
 
-  boot(target: StyleKeys) {
+  public info(outputRule?: keyof IOutputRules) {
+    this.outputRule = outputRule;
+    this.boot("info");
+  }
+
+  public warn(outputRule?: keyof IOutputRules) {
+    this.outputRule = outputRule;
+    this.boot("warn");
+  }
+
+  public error(outputRule?: keyof IOutputRules) {
+    this.outputRule = outputRule;
+    this.boot("error");
+  }
+
+  private boot(target: keyof typeof logLevel) {
     const style = (this.style = styleSheet[target]);
     this.banner = `%c${style.emoji}${this.banner || style.banner}${
       style.emoji
@@ -69,22 +91,7 @@ class Logger {
     this.output();
   }
 
-  info(outputRule?: keyof IOutputRules) {
-    this.outputRule = outputRule;
-    this.boot("info");
-  }
-
-  warn(outputRule?: keyof IOutputRules) {
-    this.outputRule = outputRule;
-    this.boot("warn");
-  }
-
-  error(outputRule?: keyof IOutputRules) {
-    this.outputRule = outputRule;
-    this.boot("error");
-  }
-
-  output() {
+  private output() {
     let log = this.log;
     let rule = this.getRule;
 
@@ -93,15 +100,15 @@ class Logger {
     }
 
     if (is.array(log)) {
-      this.isArray();
+      this.arrayOutput();
     } else if (is.object(log)) {
-      this.isObject();
+      this.objectOutput();
     } else {
-      this.isValue();
+      this.valueOutput();
     }
   }
 
-  isArray() {
+  private arrayOutput() {
     console.log(this.banner, this.style!.bannerStyle);
 
     if (this.outputRule) {
@@ -113,7 +120,7 @@ class Logger {
     }
   }
 
-  isObject() {
+  private objectOutput() {
     console.log(this.banner, this.style!.bannerStyle);
 
     if (this.outputRule) {
@@ -124,7 +131,7 @@ class Logger {
     }
   }
 
-  isValue() {
+  private valueOutput() {
     console.log(this.banner, this.style!.bannerStyle);
 
     if (this.outputRule) {
