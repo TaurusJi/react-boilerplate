@@ -18,5 +18,6 @@ const App: React.FC = () => {
     </ConnectedRouter>
   );
 };
+const AppHot = process.env.NODE_ENV === "development" ? hot(App) : App;
 
-export default hot(App);
+export default AppHot;

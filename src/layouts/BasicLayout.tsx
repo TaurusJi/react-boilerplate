@@ -10,7 +10,7 @@ import {
 import SiderMenu from "../components/Sider";
 import generateBreadcrumb from "src/utils/generateBreadcrumb";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
-import { isEmpty } from "lodash";
+import { isEmpty } from "lodash-es";
 import LoginChecker from "src/components/LoginChecker";
 import { Helmet } from "react-helmet";
 import { Link, useLocation } from "react-router-dom";

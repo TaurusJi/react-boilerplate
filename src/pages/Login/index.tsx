@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
-// import { isEmpty } from "lodash";
+// import { isEmpty } from "lodash-es";
 import { Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 // import { userLogin } from "src/store/actions/app";
@@ -13,7 +13,7 @@ import LoginCss from "./style";
 const Login: React.FC = () => {
   const [state, setState] = useState({
     username: "",
-    password: ""
+    password: "",
   });
   const history = useHistory();
   const { isLogin } = useSelector((state: State) => state.app);
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
   const handleLogin = () => {
     history.push({
       pathname: "/faq",
-      search: stringify({ a: 1 })
+      search: stringify({ a: 1 }),
     });
   };
 
@@ -68,7 +68,7 @@ const Login: React.FC = () => {
           type="text"
           prefix={<UserOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
           value={state.username}
-          onChange={e => onInputChange(e, "username")}
+          onChange={(e) => onInputChange(e, "username")}
           // onPressEnter={this.handleLogin}
         />
         <Input
@@ -77,7 +77,7 @@ const Login: React.FC = () => {
           type="password"
           prefix={<LockOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
           value={state.password}
-          onChange={e => onInputChange(e, "password")}
+          onChange={(e) => onInputChange(e, "password")}
           // onPressEnter={this.handleLogin}
         />
         <Button className="login-btn" type="primary" onClick={handleLogin}>

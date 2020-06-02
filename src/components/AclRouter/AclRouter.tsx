@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { isNil } from "lodash";
+import { isNil } from "lodash-es";
 import omitRouteRenderProperties from "./utils/omitRouteRenderProperties";
 import checkPermissions from "./utils/checkPermissions";
 import DefaultLayout from "./DefaultLayout";

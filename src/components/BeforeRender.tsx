@@ -1,5 +1,5 @@
 import React from "react";
-import { isNil } from "lodash";
+import { isNil } from "lodash-es";
 
 export type beforeRender<T = typeof React.Component> = (
   guard?: Function

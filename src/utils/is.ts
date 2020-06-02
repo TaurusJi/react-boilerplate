@@ -9,8 +9,8 @@ import {
   isArguments,
   isFunction,
   isObject,
-  isPlainObject
-} from "lodash";
+  isPlainObject,
+} from "lodash-es";
 
 let is = Object.create(null);
 
@@ -25,7 +25,7 @@ Object.assign(is, {
   arguments: isArguments,
   function: isFunction,
   object: isObject,
-  plainObject: isPlainObject
+  plainObject: isPlainObject,
 });
 
 export default is;

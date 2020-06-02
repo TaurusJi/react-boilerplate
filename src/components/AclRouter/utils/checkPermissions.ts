@@ -1,4 +1,4 @@
-import { isEmpty, isArray, isString, isFunction, indexOf } from "lodash";
+import { isEmpty, isArray, isString, isFunction, indexOf } from "lodash-es";
 
 const checkPermissions = <T>(
   authorities: T,

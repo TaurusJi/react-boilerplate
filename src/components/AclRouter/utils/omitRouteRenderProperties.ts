@@ -1,4 +1,4 @@
-import { omit } from "lodash";
+import { omit } from "lodash-es";
 import { RouteModel } from "../AclRouter";
 
 const OMIT_ROUTE_RENDER_PROPERTIES = ["render", "component", "routes"];

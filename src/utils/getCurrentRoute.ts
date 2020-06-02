@@ -4,7 +4,7 @@ import { matchRoutes } from "react-router-config";
 import { RouteModel } from "src/components/AclRouter/AclRouter";
 import { State } from "src/store/reducers";
 import { routes } from "src/config/routes";
-import { get, last } from "lodash";
+import { get, last } from "lodash-es";
 
 export const useRoute = () => {
   const { location } = useSelector((state: State) => state.router);

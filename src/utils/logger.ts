@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import { get } from "lodash-es";
 import is from "./is";
 
 enum logLevel {
