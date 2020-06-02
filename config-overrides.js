@@ -5,12 +5,13 @@ const {
   addBabelPlugins,
   addWebpackAlias,
   addWebpackPlugin,
+  addBundleVisualizer,
   addDecoratorsLegacy,
+  overrideDevServer,
 } = require("customize-cra");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const RewireReactHotLoader = require("react-app-rewire-hot-loader");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const PRODCondition = ["production", "prod", "staging", "stage", "uat", "qa"];
 const IS_PROD = PRODCondition.includes(process.env.NODE_ENV);
@@ -28,6 +29,7 @@ const webpackPlugins = [
 const rewiredMap = () => (config) => {
   config.devtool =
     config.mode === "development" ? "cheap-module-source-map" : false;
+
   config = RewireReactHotLoader(config, process.env.NODE_ENV);
 
   return config;
@@ -36,11 +38,10 @@ const rewiredMap = () => (config) => {
 if (IS_PROD) {
   babelPlugins.push("transform-remove-console");
   babelPlugins.push("transform-remove-debugger");
-  webpackPlugins.push(new BundleAnalyzerPlugin());
   webpackPlugins.push(
     new CompressionWebpackPlugin({
       test: /\.js$|\.css$/,
-      threshold: 1024,
+      threshold: 10240,
     })
   );
 }
@@ -48,6 +49,7 @@ if (IS_PROD) {
 module.exports = {
   webpack: override(
     addDecoratorsLegacy(),
+    addBundleVisualizer({}, true),
     fixBabelImports("import", {
       libraryName: "antd",
       libraryDirectory: "es",
@@ -63,20 +65,18 @@ module.exports = {
     ...webpackPlugins.map((plugin) => addWebpackPlugin(plugin)),
     rewiredMap()
   ),
-  devServer: (configFunction) => (proxy, allowedHost) => {
-    return configFunction(
-      {
-        "/api": {
-          target: "http://localhost:5000",
-          changeOrigin: true,
-          secure: false, // 不验证SSL Certs
-          xfwd: false, // 不添加x-forward标头
-          pathRewrite: {
-            "^/api": "/",
-          },
+  devServer: overrideDevServer((config) => {
+    return {
+      ...config,
+      "/api": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        secure: false, // 不验证SSL Certs
+        xfwd: false, // 不添加x-forward标头
+        pathRewrite: {
+          "^/api": "/",
         },
       },
-      allowedHost
-    );
-  },
+    };
+  }),
 };
