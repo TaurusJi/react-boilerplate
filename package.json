@@ -18,7 +18,6 @@
     "@types/redux-logger": "^3.0.8",
     "@types/styled-components": "^5.1.0",
     "antd": "^4.3.0",
-    "await-to-js": "^2.1.1",
     "connected-react-router": "^6.8.0",
     "immer": "^6.0.9",
     "is-number": "^7.0.0",

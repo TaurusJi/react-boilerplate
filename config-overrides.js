@@ -1,7 +1,6 @@
 const {
   override,
   addLessLoader,
-  fixBabelImports,
   addBabelPlugins,
   addWebpackAlias,
   addWebpackPlugin,
@@ -16,7 +15,28 @@ const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const PRODCondition = ["production", "prod", "staging", "stage", "uat", "qa"];
 const IS_PROD = PRODCondition.includes(process.env.NODE_ENV);
 
-const babelPlugins = ["lodash"];
+const babelPlugins = [
+  "lodash",
+  [
+    "import",
+    {
+      libraryName: "antd",
+      libraryDirectory: "es",
+      style: true,
+    },
+    "antd",
+  ],
+  [
+    "import",
+    {
+      libraryName: "react-use",
+      libraryDirectory: "lib",
+      camel2DashComponentName: false,
+    },
+    "react-use",
+  ],
+];
+
 const webpackPlugins = [
   new LodashModuleReplacementPlugin({
     collections: true,
@@ -50,11 +70,6 @@ module.exports = {
   webpack: override(
     addDecoratorsLegacy(),
     addBundleVisualizer({}, true),
-    fixBabelImports("import", {
-      libraryName: "antd",
-      libraryDirectory: "es",
-      style: true,
-    }),
     addLessLoader({
       javascriptEnabled: true,
     }),
@@ -66,8 +81,7 @@ module.exports = {
     rewiredMap()
   ),
   devServer: overrideDevServer((config) => {
-    return {
-      ...config,
+    config.proxy = {
       "/api": {
         target: "http://localhost:5000",
         changeOrigin: true,
@@ -78,5 +92,7 @@ module.exports = {
         },
       },
     };
+
+    return config;
   }),
 };

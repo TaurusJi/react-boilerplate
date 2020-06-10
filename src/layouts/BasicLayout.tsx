@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { Layout, Breadcrumb, Dropdown, Avatar, Menu } from "antd";
 import {
   UserOutlined,
@@ -17,8 +17,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useRoute } from "src/utils/getCurrentRoute";
 import { getPageTitle } from "src/utils/getPageTitle";
 import urlToList from "src/components/Sider/utils/urlToList";
-import { useOnUpdate } from "src/utils/hooks/useOnUpdate";
-import { useOnMount } from "src/utils/hooks/useOnMount";
 import logo from "src/assets/logo.svg";
 import styles from "./style.module.scss";
 import {
@@ -30,8 +28,6 @@ import {
   LayoutCss,
   SiderHeaderCss,
 } from "./style";
-import nProgress from "nprogress";
-import "nprogress/nprogress.css";
 
 const { Sider } = Layout;
 
@@ -134,11 +130,10 @@ const SiderHeader: React.FC = () => {
   );
 };
 
-const Footer = () => <FooterCss className="footer">Copyright © 2019</FooterCss>;
+const Footer = () => <FooterCss className="footer">Copyright © 2020</FooterCss>;
 
 const BasicLayout: React.FC = (props) => {
   const { route } = useRoute();
-  const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const headerDOM = renderHeader({
     collapsed,
@@ -146,18 +141,6 @@ const BasicLayout: React.FC = (props) => {
   });
   const pageHeaderDOM = renderPageHeader(route);
   const pageTitle = getPageTitle(route);
-
-  useEffect(() => {
-    nProgress.start();
-  }, [pathname]);
-
-  useOnMount(() => {
-    nProgress.done();
-  });
-
-  useOnUpdate(() => {
-    nProgress.done();
-  }, [props]);
 
   return (
     <LoginChecker>

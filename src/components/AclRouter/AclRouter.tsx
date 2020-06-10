@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { isNil } from "lodash-es";
 import omitRouteRenderProperties from "./utils/omitRouteRenderProperties";
 import checkPermissions from "./utils/checkPermissions";
-import DefaultLayout from "./DefaultLayout";
-import DefaultNotFound from "./DefaultNotFound";
+import Loading from "src/components/Suspense/Loading";
+import { pages } from "src/config/routes";
 
 type RCType = typeof React.Component | React.FC;
 
@@ -17,6 +17,7 @@ export interface RouteModel {
   exact?: boolean;
   routes?: RouteModel[];
   redirect?: string;
+  suspense?: RCType;
   component?: RCType;
   hideInMenu?: boolean;
   hideChildrenInMenu?: boolean;
@@ -33,10 +34,10 @@ interface IProps {
 class AclRouter extends PureComponent<IProps> {
   static defaultProps = {
     authorities: "",
-    normalLayout: DefaultLayout,
+    normalLayout: pages.DefaultLayout,
     authorizedRoutes: [],
-    authorizedLayout: DefaultLayout,
-    notFound: DefaultNotFound,
+    authorizedLayout: pages.DefaultLayout,
+    notFound: pages.DefaultNotFound,
   };
 
   renderRedirectRoute = (route: RouteModel) => (
@@ -77,6 +78,7 @@ class AclRouter extends PureComponent<IProps> {
           redirect,
           component: RouteComponent,
           unauthorized: Unauthorized,
+          suspense: SuspenseComponent,
         } = route;
         const hasPermission = checkPermissions(authorities, permissions);
 
@@ -113,11 +115,21 @@ class AclRouter extends PureComponent<IProps> {
                 }
               );
               if (RouteComponent) {
-                return (
-                  <RouteComponent {...props} {...extraProps} route={route}>
-                    {childRoutes}
-                  </RouteComponent>
-                );
+                if (SuspenseComponent) {
+                  return (
+                    <RouteComponent {...props} {...extraProps} route={route}>
+                      <Suspense fallback={<SuspenseComponent />}>
+                        {childRoutes}
+                      </Suspense>
+                    </RouteComponent>
+                  );
+                } else {
+                  return (
+                    <RouteComponent {...props} {...extraProps} route={route}>
+                      {childRoutes}
+                    </RouteComponent>
+                  );
+                }
               } else {
                 return childRoutes;
               }
@@ -131,21 +143,23 @@ class AclRouter extends PureComponent<IProps> {
   render() {
     const { routes, notFound: NotFound } = this.props;
     return (
-      <Route
-        render={(props) => {
-          const { state } = props.location;
-          // 参考：https://blog.csdn.net/grepets/article/details/96393575
-          return state && state.is404 ? (
-            state.component ? (
-              <state.component />
+      <Suspense fallback={<Loading />}>
+        <Route
+          render={(props) => {
+            const { state } = props.location;
+            // 参考：https://blog.csdn.net/grepets/article/details/96393575
+            return state && state.is404 ? (
+              state.component ? (
+                <state.component />
+              ) : (
+                <NotFound />
+              )
             ) : (
-              <NotFound />
-            )
-          ) : (
-            this.renderRoutes(routes)
-          );
-        }}
-      />
+              this.renderRoutes(routes)
+            );
+          }}
+        />
+      </Suspense>
     );
   }
 }

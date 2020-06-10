@@ -46,8 +46,8 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
 
   const [openKeys, setOpenKeys] = useState(selectedKeys);
 
-  const renderMenu = (data: IMenu[]) =>
-    data.map((item) => {
+  const renderMenu = (data: IMenu[]) => {
+    return data.map((item) => {
       if (item.children) {
         return (
           <SubMenu
@@ -73,6 +73,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
         </Menu.Item>
       );
     });
+  };
 
   return (
     <Menu

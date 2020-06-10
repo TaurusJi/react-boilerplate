@@ -12,6 +12,7 @@ import App from "./pages/App";
 import { Reset } from "styled-reset";
 import { Normalize } from "styled-normalize";
 import { GlobalCss } from "./styles/Global";
+import "nprogress/nprogress.css";
 
 ReactDOM.render(
   <Provider store={store}>
