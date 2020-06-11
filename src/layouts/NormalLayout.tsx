@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { State } from "src/store/reducers/index";
+import { useAppContext } from "src/store/app";
 import { useHistory } from "react-router-dom";
 import { NormalLayoutCss } from "./style";
 import { Helmet } from "react-helmet";
@@ -8,7 +7,8 @@ import { getPageTitle } from "src/utils/getPageTitle";
 import { useRoute } from "src/utils/getCurrentRoute";
 
 const NormalLayout: React.FC = (props) => {
-  const { isLogin } = useSelector((state: State) => state.app);
+  const { context } = useAppContext();
+  const { isLogin } = context;
   const { route } = useRoute();
   const history = useHistory();
   const pageTitle = getPageTitle(route);

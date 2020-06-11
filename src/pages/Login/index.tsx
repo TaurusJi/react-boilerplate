@@ -3,10 +3,9 @@ import React, { ChangeEvent, useEffect } from "react";
 import { Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 // import { userLogin } from "src/store/actions/app";
+import { useAppContext } from "src/store/app";
 import { stringify } from "querystring";
 import logo from "src/assets/logo.svg";
-import { useSelector } from "react-redux";
-import { State } from "src/store/reducers";
 import { useHistory } from "react-router-dom";
 import LoginCss from "./style";
 import { useImmer } from "use-immer";
@@ -17,7 +16,8 @@ const Login: React.FC = () => {
     password: "",
   });
   const history = useHistory();
-  const { isLogin } = useSelector((state: State) => state.app);
+  const { context } = useAppContext();
+  const { isLogin } = context;
 
   useEffect(() => {
     if (isLogin) {
