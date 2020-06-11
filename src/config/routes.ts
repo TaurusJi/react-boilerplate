@@ -26,12 +26,19 @@ export const routes: RouteModel[] = [
   {
     path: "/user",
     component: pages.NormalLayout,
+    suspense: Loading,
     name: "用户",
     routes: [
       {
         path: "/user/login",
         component: pages.Login,
+        exact: true,
         name: "登录",
+      },
+      {
+        path: "/user",
+        redirect: "/user/login",
+        exact: true,
       },
       {
         component: pages.NotFound,

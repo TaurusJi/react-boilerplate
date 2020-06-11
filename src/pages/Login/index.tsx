@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 // import { isEmpty } from "lodash-es";
 import { Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
@@ -9,9 +9,10 @@ import { useSelector } from "react-redux";
 import { State } from "src/store/reducers";
 import { useHistory } from "react-router-dom";
 import LoginCss from "./style";
+import { useImmer } from "use-immer";
 
 const Login: React.FC = () => {
-  const [state, setState] = useState({
+  const [state, setState] = useImmer({
     username: "",
     password: "",
   });
@@ -28,7 +29,9 @@ const Login: React.FC = () => {
     e: ChangeEvent<HTMLInputElement>,
     key: keyof typeof state
   ) => {
-    setState({ ...state, [key]: e.target.value });
+    setState((draft) => {
+      draft[key] = e.target.value;
+    });
   };
 
   const handleLogin = () => {

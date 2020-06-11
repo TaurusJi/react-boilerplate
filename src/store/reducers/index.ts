@@ -6,7 +6,7 @@ import appReducer, { AppState } from "./app";
 const rootReducer = (history: History) =>
   combineReducers({
     app: appReducer,
-    router: connectRouter(history)
+    router: connectRouter(history),
   });
 
 export interface State {
