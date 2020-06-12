@@ -1,12 +1,15 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
 import { routes } from "src/config/routes";
+import { HashRouter as Router } from "react-router-dom";
 import AclRouter from "src/components/AclRouter/AclRouter";
 import NotFound from "./NotFound";
-import { HashRouter as Router } from "react-router-dom";
+import { useAppContext } from "src/store/app";
 
-const authorities: string[] = ["admin"];
 const App: React.FC = () => {
+  const { context } = useAppContext();
+  const { authorities } = context;
+
   return (
     <Router>
       <AclRouter
