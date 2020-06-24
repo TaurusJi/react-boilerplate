@@ -12,9 +12,7 @@ import {
   isPlainObject,
 } from "lodash-es";
 
-let is = Object.create(null);
-
-Object.assign(is, {
+export default {
   array: isArray,
   number: isNumber,
   boolean: isBoolean,
@@ -23,9 +21,7 @@ Object.assign(is, {
   date: isDate,
   string: isString,
   arguments: isArguments,
-  function: isFunction,
+  func: isFunction,
   object: isObject,
   plainObject: isPlainObject,
-});
-
-export default is;
+};

@@ -92,8 +92,8 @@ class Logger {
   }
 
   private output() {
-    let log = this.log;
-    let rule = this.getRule;
+    const log = this.log;
+    const rule = this.getRule;
 
     if (rule) {
       this.log = get(log, rule, log);

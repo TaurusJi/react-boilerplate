@@ -16,7 +16,10 @@ const Login: React.FC = () => {
   const { context } = useAppContext();
   const { isLogin } = context;
   const { username, password } = state;
-  const { handleLogin } = useLogin(username, password);
+  const { handleLogin, loading } = useLogin({
+    username,
+    password,
+  });
   const history = useHistory();
 
   const onInputChange = (
@@ -36,15 +39,6 @@ const Login: React.FC = () => {
       history.push("/");
     }
   }, [history, isLogin]);
-
-  // const renderErrorMsg = () => {
-  //   const { errorMsg, prefixCls } = this.props;
-  //   const show = !isEmpty(errorMsg);
-  //   if (show) {
-  //     return <div className={`${prefixCls}-errorMsg`}>{errorMsg}</div>;
-  //   }
-  //   return null;
-  // };
 
   return (
     <LoginCss>
@@ -73,10 +67,14 @@ const Login: React.FC = () => {
           onChange={(e) => onInputChange(e, "password")}
           onPressEnter={handleLogin}
         />
-        <Button className="login-btn" type="primary" onClick={handleLogin}>
+        <Button
+          loading={loading}
+          className="login-btn"
+          type="primary"
+          onClick={handleLogin}
+        >
           登录
         </Button>
-        {/* <div>{renderErrorMsg()}</div> */}
       </div>
     </LoginCss>
   );

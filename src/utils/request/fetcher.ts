@@ -1,7 +1,7 @@
-interface IProps {
+type IProps = {
   method: "POST" | "GET" | "DELETE" | "PUT" | "PATCH";
   payload: any;
-}
+} & Partial<RequestInit>;
 
 type Fetcher<JSON = any> = (
   props: IProps
@@ -10,7 +10,7 @@ type Fetcher<JSON = any> = (
 const fetcher: Fetcher = (props) => async (input, init?) => {
   const res = await fetch(input, {
     ...init,
-    method: props.method,
+    ...props,
     headers: {
       "Content-Type": "application/json",
     },

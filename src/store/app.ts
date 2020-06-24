@@ -8,8 +8,8 @@ interface AppModel {
 
 const [appProvider, appContext] = constate(() => {
   const [context, setContext] = useImmer<AppModel>({
-    isLogin: false,
-    authorities: [],
+    isLogin: true,
+    authorities: ["admin"],
   });
 
   return {
