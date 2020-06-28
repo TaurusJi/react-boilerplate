@@ -1,36 +1,24 @@
-import React, { ChangeEvent, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Input, Button } from "antd";
-import { useImmer } from "use-immer";
+import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useAppContext } from "src/store/app";
+import { useSelector } from "react-redux";
+import { State } from "src/store/reducers";
 import logo from "src/assets/logo.svg";
 import useLogin from "src/hooks/useLogin";
 import LoginCss from "./style";
 
 const Login: React.FC = () => {
-  const [state, setState] = useImmer({
-    username: "",
-    password: "",
-  });
-  const { context } = useAppContext();
-  const { isLogin } = context;
-  const { username, password } = state;
-  const { handleLogin, loading } = useLogin({
-    username,
-    password,
-  });
   const history = useHistory();
+  const app = useSelector((state: State) => state.app);
+  const [form] = Form.useForm();
+  const { isLogin } = app;
+  const { handleLogin, loading } = useLogin();
 
-  const onInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    key: keyof typeof state
-  ) => {
-    e.persist();
-    setState((draft) => {
-      if (e.target) {
-        draft[key] = e.target.value;
-      }
+  const onLogin = () => {
+    form.validateFields().then(() => {
+      const values = form.getFieldsValue(["username", "password"]);
+      handleLogin(values);
     });
   };
 
@@ -48,33 +36,43 @@ const Login: React.FC = () => {
           <span className="app-name">React 中后台应用</span>
         </div>
         <div className="app-desc">企业级管理系统 React 应用模版</div>
-        <Input
-          className="login-input"
-          style={{ height: 40, marginBottom: 24 }}
-          placeholder="请输入用户名"
-          type="text"
-          prefix={<UserOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
-          value={state.username}
-          onChange={(e) => onInputChange(e, "username")}
-          onPressEnter={handleLogin}
-        />
-        <Input
-          className="login-input"
-          placeholder="请输入密码"
-          type="password"
-          prefix={<LockOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
-          value={state.password}
-          onChange={(e) => onInputChange(e, "password")}
-          onPressEnter={handleLogin}
-        />
-        <Button
-          loading={loading}
-          className="login-btn"
-          type="primary"
-          onClick={handleLogin}
-        >
-          登录
-        </Button>
+        <Form form={form}>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: "用户名不能为空" }]}
+          >
+            <Input
+              type="text"
+              className="login-input"
+              placeholder="请输入用户名"
+              prefix={<UserOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
+              onPressEnter={onLogin}
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "密码不能为空" }]}
+          >
+            <Input
+              type="password"
+              className="login-input"
+              placeholder="请输入密码"
+              prefix={<LockOutlined style={{ color: "rgba(0, 0, 0, .25)" }} />}
+              onPressEnter={onLogin}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              loading={loading}
+              htmlType="submit"
+              className="login-btn"
+              onClick={onLogin}
+            >
+              登录
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </LoginCss>
   );

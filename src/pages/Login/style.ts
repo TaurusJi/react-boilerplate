@@ -38,10 +38,10 @@ const LoginCss = styled.div`
 
   .login-input {
     height: 40px;
-    margin-bottom: 24px;
   }
 
   .login-btn {
+    width: 100%;
     height: 40px;
   }
 

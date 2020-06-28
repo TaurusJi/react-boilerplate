@@ -1,23 +1,22 @@
 import useSWR from "swr";
 import { message } from "antd";
 import { useImmer } from "use-immer";
-import { useAppContext } from "src/store/app";
 import fetcher from "src/utils/request/fetcher";
+import { useDispatch, batch } from "react-redux";
+import { loginAction, authoritiesAction } from "src/store/app/actions";
+import { Store } from "antd/lib/form/interface";
 
 interface LoginModel {
   authorities: string[];
 }
 
-interface LoginPayload {
-  username: string;
-  password: string;
-}
-
-const useLogin = (data: LoginPayload) => {
-  const { setContext } = useAppContext();
+const useLogin = () => {
+  const dispatch = useDispatch();
   const [state, produce] = useImmer({
     shouldLogin: false,
     loading: false,
+    username: "",
+    password: "",
   });
   const setShouldLogin = (data: boolean) => {
     produce((draft) => {
@@ -29,20 +28,30 @@ const useLogin = (data: LoginPayload) => {
       draft.loading = data;
     });
   };
+  const getLoginData = () => {
+    return {
+      username: state.username,
+      password: state.password,
+    };
+  };
   const resetState = () => {
     produce((draft) => {
       draft.shouldLogin = false;
       draft.loading = false;
     });
   };
-  const handleLogin = () => {
+  const handleLogin = (data: Store) => {
+    produce((draft) => {
+      draft.username = data.username;
+      draft.password = data.password;
+    });
     setShouldLogin(true);
   };
 
   const url = state.shouldLogin ? "/api/login" : null;
   const makeFetcher = fetcher({
     method: "POST",
-    payload: data,
+    payload: getLoginData(),
   });
 
   useSWR<LoginModel>(url, makeFetcher, {
@@ -54,11 +63,9 @@ const useLogin = (data: LoginPayload) => {
     },
     onSuccess: (data) => {
       const authorities = data?.authorities ?? [];
-      setContext((draft) => {
-        draft.isLogin = true;
-        if (authorities) {
-          draft.authorities.push(...authorities);
-        }
+      batch(() => {
+        dispatch(loginAction(true));
+        dispatch(authoritiesAction(authorities));
       });
       resetState();
     },

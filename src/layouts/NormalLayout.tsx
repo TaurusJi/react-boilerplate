@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
-import { useAppContext } from "src/store/app";
-import { useHistory } from "react-router-dom";
-import { NormalLayoutCss } from "./style";
 import { Helmet } from "react-helmet";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { State } from "src/store/reducers";
+import { NormalLayoutCss } from "./style";
 import { getPageTitle } from "src/utils/getPageTitle";
 import { useRoute } from "src/utils/getCurrentRoute";
 
 const NormalLayout: React.FC = (props) => {
-  const { context } = useAppContext();
-  const { isLogin } = context;
+  const app = useSelector((state: State) => state.app);
+  const { isLogin } = app;
   const { route } = useRoute();
   const history = useHistory();
   const pageTitle = getPageTitle(route);
