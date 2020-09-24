@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { UserCss } from "./style";
 import { Button } from "antd";
-import { useArray } from "huse";
+import { useList } from "react-use";
 
 const User: React.FC = () => {
   const [index, setIndex] = useState(1);
   const ref = useRef<number | null>(null);
-  const [list, { removeAt }] = useArray([
+  const [list, { removeAt }] = useList([
     { age: "1" },
     { age: "2" },
     { age: "3" },

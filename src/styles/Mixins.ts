@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ellipsis = ({
   component = null,
-  clamp = 1
+  clamp = 1,
 }: {
   component: any;
   clamp: number;

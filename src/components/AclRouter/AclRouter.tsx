@@ -146,7 +146,7 @@ class AclRouter extends PureComponent<IProps> {
       <Suspense fallback={<Loading />}>
         <Route
           render={(props) => {
-            const { state } = props.location;
+            const { state }: { state: any } = props.location;
             // 参考：https://blog.csdn.net/grepets/article/details/96393575
             return state && state.is404 ? (
               state.component ? (

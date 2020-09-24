@@ -45,6 +45,9 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
   }, [pathname, fullPathMenuData]);
 
   const [openKeys, setOpenKeys] = useState(selectedKeys);
+  const onOpenChange = (openKeys: any) => {
+    setOpenKeys(openKeys);
+  };
 
   const renderMenu = (data: IMenu[]) => {
     return data.map((item) => {
@@ -81,7 +84,7 @@ const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
       theme="dark"
       defaultOpenKeys={openKeys}
       selectedKeys={selectedKeys}
-      onOpenChange={setOpenKeys}
+      onOpenChange={onOpenChange}
       style={{ padding: "16px 0px" }}
     >
       {renderMenu(fullPathMenuData)}

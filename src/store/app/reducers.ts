@@ -10,7 +10,7 @@ export interface IAppState {
 }
 
 const initialState: IAppState = {
-  isLogin: false,
+  isLogin: true,
   authorities: ["admin"],
 };
 
