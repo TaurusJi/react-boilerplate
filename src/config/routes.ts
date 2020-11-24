@@ -8,8 +8,8 @@ export const pages = {
   Unauthorized: lazy(() => import("src/pages/Unauthorized")),
   NotFound: lazy(() => import("src/pages/NotFound")),
   DefaultLayout: lazy(() => import("src/components/AclRouter/DefaultLayout")),
-  DefaultNotFound: lazy(() =>
-    import("src/components/AclRouter/DefaultNotFound")
+  DefaultNotFound: lazy(
+    () => import("src/components/AclRouter/DefaultNotFound")
   ),
   FAQ: lazy(() => import("src/pages/FAQ")),
   Login: lazy(() => import("src/pages/Login")),

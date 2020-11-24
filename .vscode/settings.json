@@ -3,5 +3,6 @@
   "cSpell.words": [
     "huse",
     "middlewares"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

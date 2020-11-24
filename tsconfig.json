@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es5",
     "baseUrl": ".",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -14,10 +18,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": [
     "node_modules",
@@ -30,5 +35,7 @@
     "tslint:latest",
     "tslint-config-prettier"
   ],
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
