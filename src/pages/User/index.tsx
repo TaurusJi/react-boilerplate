@@ -1,7 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
 import { UserCss } from "./style";
-import { Button } from "antd";
+import { Button, Table } from "antd";
 import { useList } from "react-use";
+import { GlobalModalContext } from "src/context/GlobalModal/Provider";
+
+const EditUserLabel: React.FC<{ id: string }> = ({ id }) => {
+  const { openGlobalModal, closeGlobalModal } = useContext(GlobalModalContext);
+  const edit = useCallback(
+    () =>
+      openGlobalModal({
+        title: "编辑用户",
+        children: <p>{id}</p>,
+        onCancel: closeGlobalModal,
+        onOk: closeGlobalModal,
+      }),
+    [id, openGlobalModal, closeGlobalModal]
+  );
+
+  return <span onClick={edit}>编辑</span>;
+};
 
 const User: React.FC = () => {
   const [index, setIndex] = useState(1);
@@ -12,6 +35,36 @@ const User: React.FC = () => {
     { age: "3" },
     { age: "4" },
   ]);
+
+  const columns = [
+    {
+      title: "id",
+      key: "id",
+      dataIndex: "id",
+    },
+    {
+      title: "标题",
+      key: "title",
+      dataIndex: "title",
+    },
+    {
+      title: "操作",
+      key: "action",
+      dataIndex: "id",
+      render: (id: string) => <EditUserLabel id={id} />,
+    },
+  ];
+
+  const dataSource = [
+    {
+      id: "1",
+      title: "123",
+    },
+    {
+      id: "2",
+      title: "123",
+    },
+  ];
 
   function onClick() {
     const index = list.findIndex((item) => item.age === "4");
@@ -26,6 +79,7 @@ const User: React.FC = () => {
 
   return (
     <UserCss>
+      <Table rowKey="id" dataSource={dataSource} columns={columns} />
       <p className="currentIndex">当前的index是: {index}</p>
       <p className="prevIndex">上一个index是: {ref.current}</p>
       <Button

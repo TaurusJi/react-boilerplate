@@ -1,5 +1,5 @@
 import { get } from "lodash-es";
-import is from "./is";
+import { is } from "./is";
 
 enum logLevel {
   info = "info",

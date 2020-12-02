@@ -22,12 +22,12 @@ const NormalLayout: React.FC = (props) => {
   }, [history, isLogin]);
 
   return (
-    <>
+    <React.Fragment>
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
       <NormalLayoutCss>{props.children}</NormalLayoutCss>
-    </>
+    </React.Fragment>
   );
 };
 

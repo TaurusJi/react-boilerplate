@@ -12,7 +12,7 @@ import {
   isPlainObject,
 } from "lodash-es";
 
-export default {
+export const is = {
   array: isArray,
   number: isNumber,
   boolean: isBoolean,
