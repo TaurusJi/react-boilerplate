@@ -8,10 +8,13 @@ import React, {
 import { UserCss } from "./style";
 import { Button, Table } from "antd";
 import { useList } from "react-use";
-import { GlobalModalContext } from "src/context/GlobalModal/Provider";
+import { GlobalModalActionContext } from "src/context/GlobalModal/Provider";
 
 const EditUserLabel: React.FC<{ id: string }> = ({ id }) => {
-  const { openGlobalModal, closeGlobalModal } = useContext(GlobalModalContext);
+  const { openGlobalModal, closeGlobalModal } = useContext(
+    GlobalModalActionContext
+  );
+
   const edit = useCallback(
     () =>
       openGlobalModal({

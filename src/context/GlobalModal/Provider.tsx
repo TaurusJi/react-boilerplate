@@ -1,5 +1,5 @@
 import { ModalProps } from "antd/lib/modal";
-import {
+import React, {
   createContext,
   ReactNode,
   useCallback,
@@ -12,6 +12,9 @@ type ModalConfigType = (ModalProps & { children: ReactNode }) | null;
 interface DefaultValue {
   props: ModalProps | null;
   visible: boolean;
+}
+
+interface DefaultAction {
   openGlobalModal: (props: ModalConfigType) => void;
   closeGlobalModal: any;
 }
@@ -19,11 +22,15 @@ interface DefaultValue {
 const DEFAULT_VALUE: DefaultValue = {
   props: null,
   visible: false,
+};
+
+const DEFAULT_ACTION: DefaultAction = {
   openGlobalModal: () => undefined,
   closeGlobalModal: () => undefined,
 };
 
-export const GlobalModalContext = createContext(DEFAULT_VALUE);
+export const GlobalModalPropsContext = createContext(DEFAULT_VALUE);
+export const GlobalModalActionContext = createContext(DEFAULT_ACTION);
 
 export const GlobalModalContextProvider: React.FC = ({ children }) => {
   const [props, setProps] = useState<ModalConfigType>(null);
@@ -38,19 +45,26 @@ export const GlobalModalContextProvider: React.FC = ({ children }) => {
     setVisible(true);
   }, []);
 
-  const contextValue = useMemo(
+  const actionValue = useMemo(() => {
+    return {
+      closeGlobalModal,
+      openGlobalModal,
+    };
+  }, [closeGlobalModal, openGlobalModal]);
+
+  const propsValue = useMemo(
     () => ({
       props,
       visible,
-      closeGlobalModal,
-      openGlobalModal,
     }),
-    [props, openGlobalModal, closeGlobalModal, visible]
+    [props, visible]
   );
 
   return (
-    <GlobalModalContext.Provider value={contextValue}>
-      {children}
-    </GlobalModalContext.Provider>
+    <GlobalModalActionContext.Provider value={actionValue}>
+      <GlobalModalPropsContext.Provider value={propsValue}>
+        {children}
+      </GlobalModalPropsContext.Provider>
+    </GlobalModalActionContext.Provider>
   );
 };

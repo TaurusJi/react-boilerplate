@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { GlobalModalContext } from "./Provider";
+import { GlobalModalPropsContext } from "./Provider";
 import { Modal } from "antd";
 
 const GlobalModal: React.FC = () => {
-  const { props, visible } = useContext(GlobalModalContext);
+  const { props, visible } = useContext(GlobalModalPropsContext);
 
   return <Modal visible={visible} {...props} />;
 };
