@@ -13,8 +13,9 @@ import { Reset } from "styled-reset";
 import { Normalize } from "styled-normalize";
 import { GlobalModalContextProvider } from "./context/GlobalModal/Provider";
 import { GlobalCss } from "./styles/Global";
-import "nprogress/nprogress.css";
 import GlobalModal from "./context/GlobalModal";
+import "./styles/index.less";
+import "nprogress/nprogress.css";
 
 ReactDOM.render(
   <Provider store={store}>

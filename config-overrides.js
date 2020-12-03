@@ -2,7 +2,6 @@ const {
   override,
   addLessLoader,
   addBabelPlugins,
-  addWebpackAlias,
   addWebpackPlugin,
   addBundleVisualizer,
   addDecoratorsLegacy,
@@ -14,27 +13,7 @@ const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const PRODCondition = ["production", "prod", "staging", "stage", "uat", "qa"];
 const IS_PROD = PRODCondition.includes(process.env.NODE_ENV);
 
-const babelPlugins = [
-  "lodash",
-  [
-    "import",
-    {
-      libraryName: "antd",
-      libraryDirectory: "es",
-      style: true,
-    },
-    "antd",
-  ],
-  [
-    "import",
-    {
-      libraryName: "react-use",
-      libraryDirectory: "lib",
-      camel2DashComponentName: false,
-    },
-    "react-use",
-  ],
-];
+const babelPlugins = ["lodash", "ramda"];
 
 const webpackPlugins = [
   new LodashModuleReplacementPlugin({
@@ -44,13 +23,6 @@ const webpackPlugins = [
     shorthands: true,
   }),
 ];
-
-const rewiredMap = () => (config) => {
-  config.devtool =
-    config.mode === "development" ? "cheap-module-source-map" : false;
-
-  return config;
-};
 
 if (IS_PROD) {
   babelPlugins.push("transform-remove-console");
@@ -68,14 +40,12 @@ module.exports = {
     addDecoratorsLegacy(),
     addBundleVisualizer({}, true),
     addLessLoader({
-      javascriptEnabled: true,
-    }),
-    addWebpackAlias({
-      "react-dom$": "@hot-loader/react-dom",
+      lessOptions: {
+        javascriptEnabled: true,
+      }
     }),
     ...addBabelPlugins(...babelPlugins),
     ...webpackPlugins.map((plugin) => addWebpackPlugin(plugin)),
-    rewiredMap()
   ),
   devServer: overrideDevServer((config) => {
     config.proxy = {
