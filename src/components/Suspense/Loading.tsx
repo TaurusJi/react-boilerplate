@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Spin } from "antd";
 import nProgress from "nprogress";
 import LoadingCss from "./style";
 
-const Loading: React.FC = () => {
+const Loading: FC = () => {
   useEffect(() => {
     nProgress.start();
 

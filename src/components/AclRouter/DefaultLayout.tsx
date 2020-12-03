@@ -1,5 +1,5 @@
-import React from "react";
+import { FC } from "react";
 
-const DefaultLayout: React.FC = (props) => <div>{props.children}</div>;
+const DefaultLayout: FC = (props) => <div>{props.children}</div>;
 
 export default DefaultLayout;

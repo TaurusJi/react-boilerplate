@@ -1,4 +1,5 @@
-import React, {
+import {
+  FC,
   useState,
   useEffect,
   useRef,
@@ -10,7 +11,7 @@ import { Button, Table } from "antd";
 import { useList } from "react-use";
 import { GlobalModalActionContext } from "src/context/GlobalModal/Provider";
 
-const EditUserLabel: React.FC<{ id: string }> = ({ id }) => {
+const EditUserLabel: FC<{ id: string }> = ({ id }) => {
   const { openGlobalModal, closeGlobalModal } = useContext(
     GlobalModalActionContext
   );
@@ -29,7 +30,7 @@ const EditUserLabel: React.FC<{ id: string }> = ({ id }) => {
   return <span onClick={edit}>编辑</span>;
 };
 
-const User: React.FC = () => {
+const User: FC = () => {
   const [index, setIndex] = useState(1);
   const ref = useRef<number | null>(null);
   const [list, { removeAt }] = useList([

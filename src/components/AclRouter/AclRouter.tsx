@@ -1,4 +1,4 @@
-import React, { PureComponent, Suspense } from "react";
+import { Component, FC, PureComponent, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { isNil } from "lodash-es";
 import omitRouteRenderProperties from "./utils/omitRouteRenderProperties";
@@ -6,7 +6,7 @@ import checkPermissions from "./utils/checkPermissions";
 import Loading from "src/components/Suspense/Loading";
 import { pages } from "src/config/routes";
 
-type RCType = typeof React.Component | React.FC;
+type RCType = typeof Component | FC;
 
 export interface RouteModel {
   key?: string;

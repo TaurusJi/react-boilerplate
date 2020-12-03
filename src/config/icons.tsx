@@ -1,4 +1,3 @@
-import React from "react";
 import { DashboardOutlined } from "@ant-design/icons";
 
 // const customIcon = {

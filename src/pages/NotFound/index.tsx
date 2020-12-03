@@ -1,9 +1,9 @@
-import React from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import NotFoundCss from "./style";
 
-const NotFound: React.FC = () => {
+const NotFound: FC = () => {
   return (
     <NotFoundCss>
       <div className="error-code">404</div>

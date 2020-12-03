@@ -1,5 +1,5 @@
-import React from "react";
+import { FC } from "react";
 
-const DefaultNotFound: React.FC = (props) => <div>{props.children}</div>;
+const DefaultNotFound: FC = (props) => <div>{props.children}</div>;
 
 export default DefaultNotFound;

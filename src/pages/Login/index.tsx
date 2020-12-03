@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
@@ -8,7 +8,7 @@ import logo from "src/assets/logo.svg";
 import useLogin from "src/hooks/useLogin";
 import LoginCss from "./style";
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   const history = useHistory();
   const app = useSelector((state: State) => state.app);
   const [form] = Form.useForm();

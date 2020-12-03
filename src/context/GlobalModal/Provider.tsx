@@ -1,5 +1,6 @@
 import { ModalProps } from "antd/lib/modal";
-import React, {
+import {
+  FC,
   createContext,
   ReactNode,
   useCallback,
@@ -32,7 +33,7 @@ const DEFAULT_ACTION: DefaultAction = {
 export const GlobalModalPropsContext = createContext(DEFAULT_VALUE);
 export const GlobalModalActionContext = createContext(DEFAULT_ACTION);
 
-export const GlobalModalContextProvider: React.FC = ({ children }) => {
+export const GlobalModalContextProvider: FC = ({ children }) => {
   const [props, setProps] = useState<ModalConfigType>(null);
   const [visible, setVisible] = useState(false);
 

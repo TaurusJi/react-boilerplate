@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { FC, useState, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { routes } from "src/config/routes";
 import { Menu } from "antd";
@@ -22,7 +22,7 @@ interface IProps {
   menuData: IMenu[];
 }
 
-const Sider: React.FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
+const Sider: FC<IProps> & { defaultProps: Partial<IProps> } = (props) => {
   const { pathname } = useLocation();
   const { menuData } = props;
 

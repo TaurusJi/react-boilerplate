@@ -1,6 +1,6 @@
-import React from "react";
+import { FC } from "react";
 
-const FAQ: React.FC = () => {
+const FAQ: FC = () => {
   return <div className="view-notFound">FAQ</div>;
 };
 

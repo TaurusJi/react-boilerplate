@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Layout, Breadcrumb, Dropdown, Avatar, Menu } from "antd";
 import {
   UserOutlined,
@@ -132,7 +132,7 @@ const SiderHeader: React.FC = () => {
 
 const Footer = () => <FooterCss className="footer">Copyright © 2020</FooterCss>;
 
-const BasicLayout: React.FC = (props) => {
+const BasicLayout: FC = (props) => {
   const { route } = useRoute();
   const [collapsed, setCollapsed] = useState(false);
   const headerDOM = renderHeader({

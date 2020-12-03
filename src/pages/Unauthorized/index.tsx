@@ -1,10 +1,10 @@
-import React from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import UnauthorizedCss from "./style";
 import LoginChecker from "src/components/LoginChecker";
 
-const Unauthorized: React.FC = () => {
+const Unauthorized: FC = () => {
   return (
     <LoginChecker>
       <UnauthorizedCss>

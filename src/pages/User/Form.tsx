@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Button } from "antd";
 import { useImmer } from "use-immer";
 
-export default function LYE() {
+const LYE: FC = () => {
   // const [lapse, setLapse] = React.useState(0);
   // const [running, setRunning] = React.useState(false);
 
@@ -50,4 +50,6 @@ export default function LYE() {
       </Button>
     </div>
   );
-}
+};
+
+export default LYE;

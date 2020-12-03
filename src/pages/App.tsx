@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { routes } from "src/config/routes";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
@@ -7,7 +7,7 @@ import { history } from "src/store";
 import AclRouter from "src/components/AclRouter/AclRouter";
 import NotFound from "./NotFound";
 
-const App: React.FC = () => {
+const App: FC = () => {
   const app = useSelector((state: State) => state.app);
   const { authorities } = app;
 

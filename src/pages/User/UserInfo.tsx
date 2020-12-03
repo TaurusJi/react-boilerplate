@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 
 interface InjectChildrenProps {
   name: string;
@@ -10,7 +10,7 @@ interface IProps {
   children(props: InjectChildrenProps): JSX.Element;
 }
 
-const UserInfo: React.FC<IProps> = (props) => {
+const UserInfo: FC<IProps> = (props) => {
   return (
     <div>
       <p>{props.count}</p>

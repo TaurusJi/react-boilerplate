@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { NormalLayoutCss } from "./style";
 import { getPageTitle } from "src/utils/getPageTitle";
 import { useRoute } from "src/utils/getCurrentRoute";
 
-const NormalLayout: React.FC = (props) => {
+const NormalLayout: FC = (props) => {
   const app = useSelector((state: State) => state.app);
   const { isLogin } = app;
   const { route } = useRoute();
@@ -22,12 +22,12 @@ const NormalLayout: React.FC = (props) => {
   }, [history, isLogin]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
       <NormalLayoutCss>{props.children}</NormalLayoutCss>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

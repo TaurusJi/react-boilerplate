@@ -1,7 +1,7 @@
-import React from "react";
+import { Component } from "react";
 import { isNil } from "lodash-es";
 
-export type beforeRender<T = typeof React.Component> = (
+export type BeforeRender<T = typeof Component> = (
   guard?: Function
 ) => (Component: T) => T;
 
@@ -14,8 +14,8 @@ export interface IState {
  * @param {Function} guard
  * @returns 包装后的Component
  */
-const beforeRender: beforeRender = (guard) => (Component) => {
-  return class RouteGuard extends Component<{}, IState> {
+const beforeRender: BeforeRender = (guard) => (Component) => {
+  return class extends Component<{}, IState> {
     state = {
       isWaiting: true,
     };

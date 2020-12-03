@@ -1,7 +1,7 @@
-import React from "react";
+import { FC } from "react";
 import { PreloadLoadingCss } from "./style";
 
-const PreloadLoading: React.FC = () => {
+const PreloadLoading: FC = () => {
   return (
     <PreloadLoadingCss>
       <div className="loading">
