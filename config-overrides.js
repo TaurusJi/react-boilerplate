@@ -9,7 +9,6 @@ const {
   overrideDevServer,
 } = require("customize-cra");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
-const RewireReactHotLoader = require("react-app-rewire-hot-loader");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
 const PRODCondition = ["production", "prod", "staging", "stage", "uat", "qa"];
@@ -49,8 +48,6 @@ const webpackPlugins = [
 const rewiredMap = () => (config) => {
   config.devtool =
     config.mode === "development" ? "cheap-module-source-map" : false;
-
-  config = RewireReactHotLoader(config, process.env.NODE_ENV);
 
   return config;
 };

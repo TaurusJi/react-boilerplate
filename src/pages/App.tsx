@@ -1,5 +1,4 @@
 import React from "react";
-import { hot } from "react-hot-loader/root";
 import { routes } from "src/config/routes";
 import { useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
@@ -22,6 +21,5 @@ const App: React.FC = () => {
     </ConnectedRouter>
   );
 };
-const AppHot = process.env.NODE_ENV === "development" ? hot(App) : App;
 
-export default AppHot;
+export default App;
